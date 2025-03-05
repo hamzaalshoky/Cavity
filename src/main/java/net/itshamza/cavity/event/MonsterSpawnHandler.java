@@ -1,14 +1,16 @@
 package net.itshamza.cavity.event;
 
 import net.itshamza.cavity.Cavity;
+import net.itshamza.cavity.block.ModBlocks;
 import net.itshamza.cavity.entity.ModEntityCreator;
-import net.itshamza.cavity.entity.client.MonsterModel;
-import net.itshamza.cavity.entity.custom.theoneandonly.MonsterEntity;
+import net.itshamza.cavity.entity.custom.theoneandonly.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -17,13 +19,33 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 @Mod.EventBusSubscriber(modid = Cavity.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class MonsterSpawnHandler {
+
+    public static boolean isValidMonsterStructure(Level world, BlockPos pos, Block blockUnder) {
+        BlockPos down1 = pos.below();
+        BlockPos down2 = pos.below(2);
+        BlockPos west = down1.west();
+        BlockPos east = down1.east();
+        BlockPos north = down1.north();
+        BlockPos south = down1.south();
+
+        boolean vertical = world.getBlockState(down1).is(blockUnder)
+                && world.getBlockState(down2).is(ModBlocks.FLESH_BLOCK.get());
+
+        boolean horizontal1 = world.getBlockState(west).is(ModBlocks.FLESH_BLOCK.get())
+                && world.getBlockState(east).is(ModBlocks.FLESH_BLOCK.get());
+
+        boolean horizontal2 = world.getBlockState(north).is(ModBlocks.FLESH_BLOCK.get())
+                && world.getBlockState(south).is(ModBlocks.FLESH_BLOCK.get());
+
+        boolean result = vertical && (horizontal1 || horizontal2);
+
+        System.out.println("[DEBUG] Structure check at " + pos + ": " + result);
+        System.out.println("[DEBUG] Block under: " + blockUnder);
+
+        return result;
+    }
 
     @SubscribeEvent
     public static void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
@@ -31,16 +53,27 @@ public class MonsterSpawnHandler {
         BlockPos pos = event.getPos();
         Block block = event.getPlacedBlock().getBlock();
 
-        if (block == Blocks.GRANITE) {
-            // Summon an invisible marker entity
-            ArmorStand marker = new ArmorStand(EntityType.ARMOR_STAND, world);
-            marker.setInvisible(true);
-            marker.setInvulnerable(true);
-            marker.setNoGravity(true);
-            marker.setCustomName(Component.literal("GraniteMarker"));
-            marker.setCustomNameVisible(false);
-            marker.moveTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
-            world.addFreshEntity(marker);
+        System.out.println("[DEBUG] Block placed at " + pos + ": " + block);
+
+        if (event.getPlacedBlock().is(ModBlocks.CORPSE_HEAD.get())) {
+            System.out.println("[DEBUG] Corpse Head placed at " + pos);
+
+            Block blockUnder = world.getBlockState(pos.below()).getBlock();
+
+            if (isValidMonsterStructure(world, pos, blockUnder)) {
+                System.out.println("[DEBUG] Valid structure detected!");
+
+                ArmorStand marker = new ArmorStand(EntityType.ARMOR_STAND, world);
+                marker.setInvisible(true);
+                marker.setInvulnerable(true);
+                marker.setNoGravity(true);
+                marker.setCustomName(Component.literal("GraniteMarker"));
+                marker.setCustomNameVisible(false);
+                marker.moveTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+
+                world.addFreshEntity(marker);
+                System.out.println("[DEBUG] Marker placed at " + marker.blockPosition());
+            }
         }
     }
 
@@ -50,28 +83,59 @@ public class MonsterSpawnHandler {
         Level world = entity.level();
 
         if (entity instanceof ArmorStand marker && marker.hasCustomName() && "GraniteMarker".equals(marker.getCustomName().getString())) {
-            BlockPos pos = marker.blockPosition().below(); // Granite block position
+            BlockPos pos = marker.blockPosition().below();
 
-            if (world.getBlockState(pos).is(Blocks.GRANITE) && isValidWolverineStructure(world, pos)) {
-                destroyStructure(world, pos);
-                spawnWolverine(world, pos);
+            System.out.println("[DEBUG] Lightning struck marker at " + marker.blockPosition());
+
+            Block blockUnder = world.getBlockState(pos.below()).getBlock();
+            if (isValidMonsterStructure(world, pos, blockUnder)) {
+                System.out.println("[DEBUG] Monster structure confirmed!");
+
+                spawnMonster(world, pos, blockUnder);
             }
 
-            // Remove marker
             marker.remove(Entity.RemovalReason.DISCARDED);
+            System.out.println("[DEBUG] Marker removed.");
         }
     }
 
-    private static boolean isValidWolverineStructure(Level world, BlockPos pos) {
-        BlockPos down1 = pos.below();
-        BlockPos down2 = pos.below();
 
-        boolean vertical = world.getBlockState(down1).is(Blocks.IRON_BLOCK) && world.getBlockState(down2).is(Blocks.IRON_BLOCK);
+    private static void spawnMonster(Level world, BlockPos pos, Block blockUnder) {
+        if (!world.isClientSide) {
+            System.out.println("[DEBUG] Spawning monster at " + pos);
 
-        boolean horizontal1 = world.getBlockState(down1.west()).is(Blocks.IRON_BLOCK) && world.getBlockState(down1.east()).is(Blocks.IRON_BLOCK);
-        boolean horizontal2 = world.getBlockState(down1.north()).is(Blocks.IRON_BLOCK) && world.getBlockState(down1.south()).is(Blocks.IRON_BLOCK);
+            MonsterEntity monster = null;
+            if (blockUnder == (ModBlocks.BLAZE_CHEST_CAVITY.get())) {
+                monster = new BlazingMonsterEntity(ModEntityCreator.BLAZING_MONSTER.get(), world);
+            } else if (blockUnder == (ModBlocks.GUNPOWDER_CHEST_CAVITY.get())) {
+                monster = new ExplodingMonsterEntity(ModEntityCreator.EXPLODING_MONSTER.get(), world);
+            } else if (blockUnder == (ModBlocks.SPIDER_EYE_CHEST_CAVITY.get())) {
+                monster = new SpiderMonsterEntity(ModEntityCreator.SPIDER_MONSTER.get(), world);
+            } else if (blockUnder == (ModBlocks.ENDER_EYE_CHEST_CAVITY.get())) {
+                monster = new CyclopsMonsterEntity(ModEntityCreator.CYCLOPS_MONSTER.get(), world);
+            } else if (blockUnder == (ModBlocks.BUNDLE_CHEST_CAVITY.get())) {
+                monster = new BundleMonsterEntity(ModEntityCreator.BUNDLE_MONSTER.get(), world);
+            } else if (blockUnder == (ModBlocks.COPPER_CHEST_CAVITY.get())) {
+                monster = new ElectricMonsterEntity(ModEntityCreator.ELECTRIC_MONSTER.get(), world);
+            } else if (blockUnder == (ModBlocks.ICE_CHEST_CAVITY.get())) {
+                monster = new IceMonsterEntity(ModEntityCreator.ICE_MONSTER.get(), world);
+            } else if (blockUnder == (ModBlocks.ROTTEN_FLESH_CHEST_CAVITY.get())) {
+                monster = new RottenMonsterEntity(ModEntityCreator.ROTTEN_MONSTER.get(), world);
+            } else if (blockUnder == (ModBlocks.RIDABLE_CHEST_CAVITY.get())) {
+                monster = new RidableMonsterEntity(ModEntityCreator.RIDABLE_MONSTER.get(), world);
+            } else if (blockUnder == (ModBlocks.SEWN_CHEST_CAVITY.get())) {
+                monster = new RidableMonsterEntity(ModEntityCreator.MONSTER.get(), world);
+            }else {
+                monster = null;
+            }
 
-        return vertical && (horizontal1 || horizontal2);
+            if (monster != null) {
+                destroyStructure(world, pos);
+                monster.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                world.addFreshEntity(monster);
+                System.out.println("[DEBUG] " + monster.getClass().getSimpleName() + " spawned at " + pos);
+            }
+        }
     }
 
     private static void destroyStructure(Level world, BlockPos pos) {
@@ -83,13 +147,7 @@ public class MonsterSpawnHandler {
         world.setBlock(pos.below().east(), Blocks.AIR.defaultBlockState(), 3);
         world.setBlock(pos.below().north(), Blocks.AIR.defaultBlockState(), 3);
         world.setBlock(pos.below().south(), Blocks.AIR.defaultBlockState(), 3);
-    }
 
-    private static void spawnWolverine(Level world, BlockPos pos) {
-        if (!world.isClientSide) {
-            MonsterEntity wolverine = new MonsterEntity(ModEntityCreator.MONSTER.get(), world);
-            wolverine.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-            world.addFreshEntity(wolverine);
-        }
+        System.out.println("[DEBUG] Structure destroyed at " + pos);
     }
 }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "cavity:block/unsewn_copper_cavity",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "cavity:block/unsewn_copper_cavity"
+    },
+    "facing=south": {
+      "model": "cavity:block/unsewn_copper_cavity",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cavity:block/unsewn_copper_cavity",
+      "y": 270
+    }
+  }
+}

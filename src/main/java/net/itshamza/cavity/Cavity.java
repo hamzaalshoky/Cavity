@@ -2,15 +2,15 @@ package net.itshamza.cavity;
 
 import com.mojang.logging.LogUtils;
 import net.itshamza.cavity.block.ModBlocks;
-import net.itshamza.cavity.block.entity.ModBlockEntities;
-import net.itshamza.cavity.block.menu.CavityBlockScreen;
-import net.itshamza.cavity.block.menu.ModMenuTypes;
 import net.itshamza.cavity.entity.ModEntityCreator;
 import net.itshamza.cavity.item.ModItems;
+import net.itshamza.cavity.screen.ModMenus;
+import net.itshamza.cavity.screen.ModScreens;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -34,7 +34,7 @@ public class Cavity
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "cavity";
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
 
 
@@ -53,8 +53,7 @@ public class Cavity
         ModEntityCreator.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
-        ModBlockEntities.register(modEventBus);
-        ModMenuTypes.register(modEventBus);
+        ModMenus.register(modEventBus);
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -76,8 +75,30 @@ public class Cavity
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        //if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-        //    event.accept(EXAMPLE_BLOCK_ITEM);
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
+            event.accept(ModBlocks.BLAZE_CHEST_CAVITY);
+            event.accept(ModBlocks.BUNDLE_CHEST_CAVITY);
+            event.accept(ModBlocks.CHEST_CAVITY);
+            event.accept(ModBlocks.COPPER_CHEST_CAVITY);
+            event.accept(ModBlocks.GUNPOWDER_CHEST_CAVITY);
+            event.accept(ModBlocks.CORPSE_HEAD);
+            event.accept(ModBlocks.ENDER_EYE_CHEST_CAVITY);
+            event.accept(ModBlocks.FLESH_BLOCK);
+            event.accept(ModBlocks.ICE_CHEST_CAVITY);
+            event.accept(ModBlocks.RIDABLE_CHEST_CAVITY);
+            event.accept(ModBlocks.ROTTEN_FLESH_CHEST_CAVITY);
+            event.accept(ModBlocks.SEWN_CHEST_CAVITY);
+            event.accept(ModBlocks.SPIDER_EYE_CHEST_CAVITY);
+            event.accept(ModBlocks.UNSEWN_BLAZE_CAVITY);
+            event.accept(ModBlocks.UNSEWN_BUNDLE_CAVITY);
+            event.accept(ModBlocks.UNSEWN_COPPER_CAVITY);
+            event.accept(ModBlocks.UNSEWN_ENDER_EYE_CAVITY);
+            event.accept(ModBlocks.UNSEWN_GUNPOWDER_CAVITY);
+            event.accept(ModBlocks.UNSEWN_ICE_CAVITY);
+            event.accept(ModBlocks.UNSEWN_RIDABLE_CAVITY);
+            event.accept(ModBlocks.UNSEWN_ROTTEN_FLESH_CAVITY);
+            event.accept(ModBlocks.UNSEWN_SPIDER_EYE_CAVITY);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -93,7 +114,7 @@ public class Cavity
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                MenuScreens.register(ModMenuTypes.CAVITY_BLOCK_MENU.get(), CavityBlockScreen::new);
+
             });
         }
     }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "cavity:block/corpse_head",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "cavity:block/corpse_head"
+    },
+    "facing=south": {
+      "model": "cavity:block/corpse_head",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cavity:block/corpse_head",
+      "y": 270
+    }
+  }
+}

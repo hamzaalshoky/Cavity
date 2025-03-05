@@ -1,0 +1,38 @@
+{
+  "container.bundle_monster": "Storage Abomination",
+
+  "block.cavity.blaze_chest_cavity": "Sewn Blazing Chest Cavity",
+  "block.cavity.bundle_chest_cavity": "Sewn Bundle Chest Cavity",
+  "block.cavity.chest_cavity": "Chest Cavity",
+  "block.cavity.copper_chest_cavity": "Sewn Electric Chest Cavity",
+  "block.cavity.corpse_head": "Corpse Head",
+  "block.cavity.ender_eye_chest_cavity": "Sewn Cyclops Chest Cavity",
+  "block.cavity.flesh_block": "Block of Rotten Flesh",
+  "block.cavity.gunpowder_chest_cavity": "Sewn Explosive Chest Cavity",
+  "block.cavity.ice_chest_cavity": "Sewn Frozen Chest Cavity",
+  "block.cavity.ridable_chest_cavity": "Sewn Hunchback Chest Cavity",
+  "block.cavity.rotten_flesh_chest_cavity": "Sewn Rotten Chest Cavity",
+  "block.cavity.sewn_chest_cavity": "Sewn Chest Cavity",
+  "block.cavity.spider_eye_chest_cavity": "Spider Eye Chest Cavity",
+  "block.cavity.unsewn_blaze_cavity": "Blazing Chest Cavity",
+  "block.cavity.unsewn_bundle_cavity": "Bundle Chest Cavity",
+  "block.cavity.unsewn_copper_cavity": "Electric Chest Cavity",
+  "block.cavity.unsewn_ender_eye_cavity": "Cyclops Chest Cavity",
+  "block.cavity.unsewn_gunpowder_cavity": "Explosive Chest Cavity",
+  "block.cavity.unsewn_ice_cavity": "Frozen Chest Cavity",
+  "block.cavity.unsewn_ridable_cavity": "Hunchback Chest Cavity",
+  "block.cavity.unsewn_rotten_flesh_cavity": "Rotten Chest Cavity",
+  "block.cavity.unsewn_spider_eye_cavity": "Spider Eye Chest Cavity",
+
+  "entity.cavity.monster": "Abomination",
+  "entity.cavity.blazing_monster": "Blazing Abomination",
+  "entity.cavity.bundle_monster": "Storage Abomination",
+  "entity.cavity.cyclops_monster": "Cyclops Abomination",
+  "entity.cavity.electric_monster": "Electric Abomination",
+  "entity.cavity.exploding_monster": "Exploding Abomination",
+  "entity.cavity.ice_monster": "Frozen Abomination",
+  "entity.cavity.ridable_monster": "Hunchback Abomination",
+  "entity.cavity.rotten_monster": "Rotten Abomination",
+  "entity.cavity.spider_monster": "Arachnid Abomination"
+
+}

@@ -11,6 +11,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.WaterAnimal;
@@ -28,6 +29,9 @@ public class MonsterEntity extends Monster {
     public final AnimationState attackAnimationState = new AnimationState();
     public int attackAnimationTimeout = 0;
 
+    private static final float NORMAL_SPEED = 0.17F;
+    private static final float AGGRO_SPEED = 0.25F;
+
 
     public MonsterEntity(EntityType<? extends Monster> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
@@ -39,6 +43,7 @@ public class MonsterEntity extends Monster {
         this.goalSelector.addGoal(2, new RandomSwimmingGoal(this,1.0D, 1));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, (double)1.2F, true));
         //this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         //this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
@@ -51,7 +56,7 @@ public class MonsterEntity extends Monster {
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.1D)
-                .add(Attributes.ATTACK_DAMAGE, 2f);
+                .add(Attributes.ATTACK_DAMAGE, 6f);
     }
 
     public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
@@ -85,6 +90,17 @@ public class MonsterEntity extends Monster {
 
         if(!this.isAttacking()) {
             attackAnimationState.stop();
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+
+        if (this.getTarget() != null && this.getTarget().isAlive() && this.isAggressive()) {
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(AGGRO_SPEED);
+        } else {
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(NORMAL_SPEED);
         }
     }
 
