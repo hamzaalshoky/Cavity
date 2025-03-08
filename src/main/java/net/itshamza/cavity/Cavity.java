@@ -3,6 +3,7 @@ package net.itshamza.cavity;
 import com.mojang.logging.LogUtils;
 import net.itshamza.cavity.block.ModBlocks;
 import net.itshamza.cavity.entity.ModEntityCreator;
+import net.itshamza.cavity.event.PacketHandler;
 import net.itshamza.cavity.item.ModItems;
 import net.itshamza.cavity.screen.ModMenus;
 import net.itshamza.cavity.screen.ModScreens;
@@ -54,6 +55,7 @@ public class Cavity
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
         ModMenus.register(modEventBus);
+        PacketHandler.register();
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -88,7 +90,6 @@ public class Cavity
             event.accept(ModBlocks.RIDABLE_CHEST_CAVITY);
             event.accept(ModBlocks.ROTTEN_FLESH_CHEST_CAVITY);
             event.accept(ModBlocks.SEWN_CHEST_CAVITY);
-            event.accept(ModBlocks.SPIDER_EYE_CHEST_CAVITY);
             event.accept(ModBlocks.UNSEWN_BLAZE_CAVITY);
             event.accept(ModBlocks.UNSEWN_BUNDLE_CAVITY);
             event.accept(ModBlocks.UNSEWN_COPPER_CAVITY);
@@ -97,7 +98,6 @@ public class Cavity
             event.accept(ModBlocks.UNSEWN_ICE_CAVITY);
             event.accept(ModBlocks.UNSEWN_RIDABLE_CAVITY);
             event.accept(ModBlocks.UNSEWN_ROTTEN_FLESH_CAVITY);
-            event.accept(ModBlocks.UNSEWN_SPIDER_EYE_CAVITY);
         }
     }
 

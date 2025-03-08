@@ -49,7 +49,7 @@ public class IceMonsterEntity extends MonsterEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return WaterAnimal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 100D)
+                .add(Attributes.MAX_HEALTH, 80D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.1D)

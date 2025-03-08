@@ -5,9 +5,12 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -27,7 +30,6 @@ public class ExplodingMonsterEntity extends MonsterEntity {
     public final AnimationState attackAnimationState = new AnimationState();
     public int attackAnimationTimeout = 0;
 
-
     public ExplodingMonsterEntity(EntityType<? extends MonsterEntity> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
     }
@@ -39,15 +41,12 @@ public class ExplodingMonsterEntity extends MonsterEntity {
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new HurtByTargetGoal(this));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, (double)1.2F, true));
-        //this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        //this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false));
-        //this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+        this.goalSelector.addGoal(1, new ExplodingMeleeAttackGoal(this, 1.2F, true));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return WaterAnimal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 50D)
+                .add(Attributes.MAX_HEALTH, 30D)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.1D)
@@ -57,8 +56,6 @@ public class ExplodingMonsterEntity extends MonsterEntity {
     public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
         return !this.hasCustomName();
     }
-
-    // ANIMATIONS //
 
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
         this.playSound(SoundEvents.ZOMBIE_STEP, 0.15F, 1.0F);
@@ -89,13 +86,7 @@ public class ExplodingMonsterEntity extends MonsterEntity {
     }
 
     protected void updateWalkAnimation(float v) {
-        float f;
-        if (this.getPose() == Pose.STANDING) {
-            f = Math.min(v * 6.0F, 1.0F);
-        } else {
-            f = 0.0F;
-        }
-
+        float f = this.getPose() == Pose.STANDING ? Math.min(v * 6.0F, 1.0F) : 0.0F;
         this.walkAnimation.update(f, 0.2F);
     }
 
@@ -122,7 +113,6 @@ public class ExplodingMonsterEntity extends MonsterEntity {
         this.entityData.define(ATTACKING, false);
     }
 
-
     @Override
     public void die(DamageSource cause) {
         super.die(cause);
@@ -130,7 +120,45 @@ public class ExplodingMonsterEntity extends MonsterEntity {
         if (!this.level().isClientSide()) {
             float explosionPower = 3.0F;
             boolean canGrief = true;
-            this.level().explode(this, this.getX(), this.getY(), this.getZ(), explosionPower, canGrief ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE);
+            this.level().explode(this, this.getX(), this.getY(), this.getZ(), explosionPower,
+                    canGrief ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE);
         }
+    }
+
+    private void maybeExplodeOnAttack() {
+        if (!this.level().isClientSide() && this.random.nextFloat() < 0.2F) {
+
+        }
+    }
+
+    public class ExplodingMeleeAttackGoal extends MeleeAttackGoal {
+        private final ExplodingMonsterEntity entity;
+
+        public ExplodingMeleeAttackGoal(ExplodingMonsterEntity entity, double speed, boolean longMemory) {
+            super(entity, speed, longMemory);
+            this.entity = entity;
+        }
+
+        @Override
+        protected void checkAndPerformAttack(LivingEntity target, double distanceSquared) {
+            double attackReach = this.getAttackReachSqr(target);
+            if (distanceSquared <= attackReach && this.getTicksUntilNextAttack() <= 0) {
+                this.resetAttackCooldown();
+                this.mob.swing(InteractionHand.MAIN_HAND);
+                if (this.entity.level().random.nextFloat() < 0.3f) {
+                    float smallExplosionPower = 1.5F;
+                    boolean canGrief = true;
+                    this.entity.level().explode(this.entity, this.entity.getX(), this.entity.getY(), this.entity.getZ(), smallExplosionPower,
+                            canGrief ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE);
+                }else{
+                    this.mob.doHurtTarget(target);
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        return source.is(DamageTypes.EXPLOSION) || super.isInvulnerableTo(source);
     }
 }

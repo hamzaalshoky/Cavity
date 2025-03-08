@@ -28,11 +28,22 @@ public class ElectricMonsterModel<T extends ElectricMonsterEntity> extends Hiera
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, -6.0F));
 
-		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -37.0F, -8.0F, 16.0F, 37.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-10.0F, -20.0F, -10.0F, 20.0F, 20.0F, 20.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -5.0F, 6.0F));
 
-		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 53).addBox(-8.0F, -48.0F, -8.0F, 16.0F, 11.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 40).addBox(-4.0F, -6.0F, -4.0F, 8.0F, 6.0F, 8.0F, new CubeDeformation(0.0F))
+				.texOffs(16, 54).addBox(-1.0F, -3.0F, -6.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
+				.texOffs(48, 50).addBox(-2.0F, -11.0F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(32, 40).addBox(-3.0F, -15.0F, -2.5F, 6.0F, 4.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -20.0F, 0.0F));
+
+		PartDefinition hand_l = body.addOrReplaceChild("hand_l", CubeListBuilder.create().texOffs(32, 49).addBox(0.0F, -2.0F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(10.0F, -6.0F, -2.0F));
+
+		PartDefinition hand_r = body.addOrReplaceChild("hand_r", CubeListBuilder.create().texOffs(32, 49).mirror().addBox(-4.0F, -2.0F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-10.0F, -6.0F, -2.0F));
+
+		PartDefinition leg_r = all.addOrReplaceChild("leg_r", CubeListBuilder.create().texOffs(0, 54).mirror().addBox(-2.0F, 0.0F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-6.0F, -5.0F, 6.0F));
+
+		PartDefinition leg_l = all.addOrReplaceChild("leg_l", CubeListBuilder.create().texOffs(0, 54).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(6.0F, -5.0F, 6.0F));
 
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
@@ -42,8 +53,8 @@ public class ElectricMonsterModel<T extends ElectricMonsterEntity> extends Hiera
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(entity, netHeadYaw, headPitch, ageInTicks);
 
-		//this.animateWalk(ModAnimationDefinitions.BEAVER_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
-		this.animate(entity.idleAnimationState, ModAnimationDefinitions.IDLE, ageInTicks, 1f);
+		this.animateWalk(ModAnimationDefinitions.EXPLODING_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.animate(entity.idleAnimationState, ModAnimationDefinitions.EXPLODING_IDLE, ageInTicks, 1f);
 		//this.animate(entity.swimmingAnimationState, ModAnimationDefinitions.BEAVER_SWIM, ageInTicks, 1f);
 	}
 	private void applyHeadRotation(ElectricMonsterEntity pEntity, float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {

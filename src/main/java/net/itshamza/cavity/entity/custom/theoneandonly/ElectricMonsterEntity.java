@@ -47,7 +47,7 @@ public class ElectricMonsterEntity extends MonsterEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return WaterAnimal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 100D)
+                .add(Attributes.MAX_HEALTH, 40D)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.1D)
@@ -146,7 +146,7 @@ public class ElectricMonsterEntity extends MonsterEntity {
                 this.resetAttackCooldown();
                 this.mob.swing(InteractionHand.MAIN_HAND);
 
-                if (this.entity.level().isThundering()) {
+                if (this.entity.level().random.nextFloat() < 0.4f) {
                     this.entity.summonLightningAttack();
                 } else {
                     this.mob.doHurtTarget(target);
@@ -156,7 +156,7 @@ public class ElectricMonsterEntity extends MonsterEntity {
     }
 
     public void summonLightningAttack() {
-        if (!this.level().isClientSide() && this.level().isThundering()) {
+        if (!this.level().isClientSide()) {
             LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level());
             if (lightning != null) {
                 lightning.moveTo(this.getX(), this.getY(), this.getZ() + 1);

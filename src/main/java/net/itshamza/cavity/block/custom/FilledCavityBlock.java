@@ -37,7 +37,10 @@ public class FilledCavityBlock extends Block {
             if (itemStack.getItem() instanceof ShearsItem) {
                 Block newBlock = getTransformedBlock(itemToUse);
 
-                world.setBlockAndUpdate(pos, newBlock.defaultBlockState());
+                BlockState newState = newBlock.defaultBlockState()
+                        .setValue(FACING, state.getValue(FACING));
+
+                world.setBlockAndUpdate(pos, newState);
 
                 itemStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
                 return InteractionResult.SUCCESS;
@@ -49,7 +52,6 @@ public class FilledCavityBlock extends Block {
     private Block getTransformedBlock(ItemStack storedItem) {
         if (storedItem.is(Items.BLAZE_POWDER)) return ModBlocks.BLAZE_CHEST_CAVITY.get();
         if (storedItem.is(Items.GUNPOWDER)) return ModBlocks.GUNPOWDER_CHEST_CAVITY.get();
-        if (storedItem.is(Items.SPIDER_EYE)) return ModBlocks.SPIDER_EYE_CHEST_CAVITY.get();
         if (storedItem.is(Items.ENDER_EYE)) return ModBlocks.ENDER_EYE_CHEST_CAVITY.get();
         if (storedItem.is(Items.BUNDLE)) return ModBlocks.BUNDLE_CHEST_CAVITY.get();
         if (storedItem.is(Items.COPPER_INGOT)) return ModBlocks.COPPER_CHEST_CAVITY.get();

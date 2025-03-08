@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -20,6 +21,9 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+
+import java.util.List;
 
 public class RottenMonsterEntity extends MonsterEntity {
     private static final EntityDataAccessor<Boolean> ATTACKING =
@@ -107,6 +111,24 @@ public class RottenMonsterEntity extends MonsterEntity {
 
         if (this.level().isClientSide()) {
             this.setupAnimationStates();
+        }
+        if (!this.level().isClientSide) {
+            List<LivingEntity> nearbyEntities = this.level().getEntitiesOfClass(LivingEntity.class,
+                    new AABB(this.blockPosition()).inflate(5.0));
+
+            for (LivingEntity entity : nearbyEntities) {
+                if (entity != this) {
+                    if (entity instanceof Player player) {
+                        if (!player.isCreative() && !player.isSpectator()) {
+                            this.setTarget(player);
+                            break;
+                        }
+                    } else {
+                        this.setTarget(entity);
+                        break;
+                    }
+                }
+            }
         }
     }
 

@@ -1,0 +1,25 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:ender_eye"
+    },
+    "title": {
+      "translate": "advancements.adventure.nobody.title"
+    },
+    "description":{
+      "translate": "advancements.adventure.nobody.description"
+    }
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "attack_cyclops": {
+      "trigger": "minecraft:player_hurt_entity",
+      "conditions": {
+        "entity": {
+          "type": "cavity:cyclops_monster"
+        }
+      }
+    }
+  },
+  "requirements": []
+}

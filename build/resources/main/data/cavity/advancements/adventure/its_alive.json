@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "cavity:corpse_head"
+    },
+    "title": {
+      "translate": "advancements.adventure.its_alive.title"
+    },
+    "description": {
+      "translate": "advancements.adventure.its_alive.description"
+    }
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "spawn_abomination": {
+      "trigger": "minecraft:summoned_entity",
+      "conditions": {
+        "entity": {
+          "condition": "minecraft:match_any",
+          "predicates": [
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:monster" } },
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:blazing_monster" } },
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:bundle_monster" } },
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:electric_monster" } },
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:cyclops_monster" } },
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:exploding_monster" } },
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:ice_monster" } },
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:ridable_monster" } },
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:rotten_monster" } }
+          ]
+        }
+      }
+    }
+  },
+  "requirements": [["spawn_abomination"]]
+}

@@ -30,11 +30,21 @@ public class ExplodingMonsterModel<T extends ExplodingMonsterEntity> extends Hie
 
 		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -37.0F, -8.0F, 16.0F, 37.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -5.0F, 0.0F));
 
-		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 53).addBox(-8.0F, -48.0F, -8.0F, 16.0F, 11.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(52, 46).addBox(-1.0F, -3.0F, -6.0F, 2.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 32).addBox(0.0F, -12.0F, 4.0F, 0.0F, 12.0F, 12.0F, new CubeDeformation(0.0F))
+				.texOffs(24, 32).addBox(-4.0F, -6.0F, -4.0F, 8.0F, 6.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -16.0F, -2.0F));
 
-		return LayerDefinition.create(meshdefinition, 128, 128);
+		PartDefinition hand_l = body.addOrReplaceChild("hand_l", CubeListBuilder.create().texOffs(24, 46).addBox(0.0F, -2.0F, -1.5F, 3.0F, 14.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(8.0F, -12.0F, -2.5F));
+
+		PartDefinition hand_r = body.addOrReplaceChild("hand_r", CubeListBuilder.create().texOffs(24, 46).mirror().addBox(-3.0F, -2.0F, -1.5F, 3.0F, 14.0F, 3.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-8.0F, -12.0F, -2.5F));
+
+		PartDefinition leg_r = all.addOrReplaceChild("leg_r", CubeListBuilder.create().texOffs(36, 46).mirror().addBox(-2.0F, 0.0F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-5.0F, -5.0F, 0.0F));
+
+		PartDefinition leg_l = all.addOrReplaceChild("leg_l", CubeListBuilder.create().texOffs(36, 46).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(5.0F, -5.0F, 0.0F));
+
+		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
 
 	@Override
@@ -42,8 +52,8 @@ public class ExplodingMonsterModel<T extends ExplodingMonsterEntity> extends Hie
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(entity, netHeadYaw, headPitch, ageInTicks);
 
-		//this.animateWalk(ModAnimationDefinitions.BEAVER_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
-		this.animate(entity.idleAnimationState, ModAnimationDefinitions.IDLE, ageInTicks, 1f);
+		this.animateWalk(ModAnimationDefinitions.EXPLODING_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.animate(entity.idleAnimationState, ModAnimationDefinitions.EXPLODING_IDLE, ageInTicks, 1f);
 		//this.animate(entity.swimmingAnimationState, ModAnimationDefinitions.BEAVER_SWIM, ageInTicks, 1f);
 	}
 	private void applyHeadRotation(ExplodingMonsterEntity pEntity, float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {

@@ -5,6 +5,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
@@ -31,6 +32,7 @@ public class MonsterEntity extends Monster {
 
     private static final float NORMAL_SPEED = 0.17F;
     private static final float AGGRO_SPEED = 0.25F;
+    private int spawnTicks = 50;
 
 
     public MonsterEntity(EntityType<? extends Monster> p_27557_, Level p_27558_) {
@@ -122,6 +124,9 @@ public class MonsterEntity extends Monster {
         if (this.level().isClientSide()) {
             this.setupAnimationStates();
         }
+        if (spawnTicks > 0) {
+            spawnTicks--;
+        }
     }
 
     public void setAttacking(boolean attacking) {
@@ -137,5 +142,11 @@ public class MonsterEntity extends Monster {
         super.defineSynchedData();
         this.entityData.define(ATTACKING, false);
     }
-
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        if (spawnTicks > 0) {
+            return true;
+        }
+        return super.isInvulnerableTo(source);
+    }
 }

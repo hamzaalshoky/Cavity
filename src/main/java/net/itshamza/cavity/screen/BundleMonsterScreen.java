@@ -34,7 +34,6 @@ public class BundleMonsterScreen extends AbstractContainerScreen<BundleMonsterMe
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.drawString(this.font, Component.translatable("container.bundle_monster"), 8, 6, 4210752);
-        guiGraphics.drawString(this.font, Component.translatable("container.inventory"), 8, 75, 4210752);
+
     }
 }

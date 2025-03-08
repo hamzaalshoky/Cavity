@@ -31,28 +31,25 @@ public class ModEntityCreator {
                     .sized(1f, 3f).build("blazing_monster"));
     public static final RegistryObject<EntityType<BundleMonsterEntity>> BUNDLE_MONSTER =
             ENTITY_TYPES.register("bundle_monster", () -> EntityType.Builder.of(BundleMonsterEntity::new, MobCategory.MONSTER)
-                    .sized(1f, 3f).build("bundle_monster"));
+                    .sized(0.8f, 1.2f).build("bundle_monster"));
     public static final RegistryObject<EntityType<CyclopsMonsterEntity>> CYCLOPS_MONSTER =
             ENTITY_TYPES.register("cyclops_monster", () -> EntityType.Builder.of(CyclopsMonsterEntity::new, MobCategory.MONSTER)
                     .sized(1f, 3f).build("cyclops_monster"));
     public static final RegistryObject<EntityType<ElectricMonsterEntity>> ELECTRIC_MONSTER =
             ENTITY_TYPES.register("electric_monster", () -> EntityType.Builder.of(ElectricMonsterEntity::new, MobCategory.MONSTER)
-                    .sized(1f, 3f).build("electric_monster"));
+                    .sized(1.3f, 2f).build("electric_monster"));
     public static final RegistryObject<EntityType<ExplodingMonsterEntity>> EXPLODING_MONSTER =
             ENTITY_TYPES.register("exploding_monster", () -> EntityType.Builder.of(ExplodingMonsterEntity::new, MobCategory.MONSTER)
-                    .sized(1f, 3f).build("exploding_monster"));
+                    .sized(1f, 1.7f).build("exploding_monster"));
     public static final RegistryObject<EntityType<IceMonsterEntity>> ICE_MONSTER =
             ENTITY_TYPES.register("ice_monster", () -> EntityType.Builder.of(IceMonsterEntity::new, MobCategory.MONSTER)
                     .sized(1f, 3f).build("ice_monster"));
     public static final RegistryObject<EntityType<RidableMonsterEntity>> RIDABLE_MONSTER =
             ENTITY_TYPES.register( "ridable_monster", () -> EntityType.Builder.of(RidableMonsterEntity::new, MobCategory.MONSTER)
-                    .sized(1f, 3f).build("ridable_monster"));
+                    .sized(0.9f, 2.3f).build("ridable_monster"));
     public static final RegistryObject<EntityType<RottenMonsterEntity>> ROTTEN_MONSTER =
             ENTITY_TYPES.register("rotten_monster", () -> EntityType.Builder.of(RottenMonsterEntity::new, MobCategory.MONSTER)
                     .sized(1f, 3f).build("rotten_monster"));
-    public static final RegistryObject<EntityType<SpiderMonsterEntity>> SPIDER_MONSTER =
-            ENTITY_TYPES.register("spider_monster", () -> EntityType.Builder.of(SpiderMonsterEntity::new, MobCategory.MONSTER)
-                    .sized(1f, 3f).build("spider_monster"));
 
 
     //RENDERERS
@@ -69,7 +66,6 @@ public class ModEntityCreator {
         event.registerEntityRenderer(ModEntityCreator.RIDABLE_MONSTER.get(), RidableMonsterRenderer::new);
         event.registerEntityRenderer(ModEntityCreator.ROTTEN_MONSTER.get(), RottenMonsterRenderer::new);
         event.registerEntityRenderer(ModEntityCreator.ROTTEN_MONSTER.get(), RottenMonsterRenderer::new);
-        event.registerEntityRenderer(ModEntityCreator.SPIDER_MONSTER.get(), SpiderMonsterRenderer::new);
     }
 
     //LAYERS
@@ -85,7 +81,6 @@ public class ModEntityCreator {
         event.registerLayerDefinition(ModModelLayers.EXPLODING_MONSTER_LAYER, ExplodingMonsterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.RIDABLE_MONSTER_LAYER, RidableMonsterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.ROTTEN_MONSTER_LAYER, RottenMonsterModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.SPIDER_MONSTER_LAYER, SpiderMonsterModel::createBodyLayer);
     }
 
     //ATTRIBUTES
@@ -101,7 +96,6 @@ public class ModEntityCreator {
         event.put(ModEntityCreator.ICE_MONSTER.get(), IceMonsterEntity.createAttributes().build());
         event.put(ModEntityCreator.RIDABLE_MONSTER.get(), RidableMonsterEntity.createAttributes().build());
         event.put(ModEntityCreator.ROTTEN_MONSTER.get(), RottenMonsterEntity.createAttributes().build());
-        event.put(ModEntityCreator.SPIDER_MONSTER.get(), SpiderMonsterEntity.createAttributes().build());
     }
 
     public static void register(IEventBus eventBus) {

@@ -60,7 +60,7 @@ public class BundleMonsterEntity extends MonsterEntity implements ContainerListe
 
     public static AttributeSupplier.Builder createAttributes() {
         return WaterAnimal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 100D)
+                .add(Attributes.MAX_HEALTH, 30D)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.1D)
@@ -216,6 +216,14 @@ public class BundleMonsterEntity extends MonsterEntity implements ContainerListe
 
     protected void dropEquipment() {
         super.dropEquipment();
+        if (!this.level().isClientSide) {
+            for (int i = 0; i < this.inventory.getContainerSize(); i++) {
+                ItemStack itemstack = this.inventory.getItem(i);
+                if (!itemstack.isEmpty()) {
+                    this.spawnAtLocation(itemstack);
+                }
+            }
+        }
         if (this.hasChest()) {
             if (!this.level().isClientSide) {
                 this.spawnAtLocation(Items.BUNDLE);

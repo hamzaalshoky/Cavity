@@ -40,10 +40,6 @@ public class ModBlocks {
             () -> new CavityBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.ZOMBIE).mapColor(MapColor.COLOR_GREEN).strength(1F).sound(SoundType.MUD), Items.GUNPOWDER.getDefaultInstance()));
     public static final RegistryObject<Block> GUNPOWDER_CHEST_CAVITY = registerBlock("gunpowder_chest_cavity",
             () -> new RotatingBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.ZOMBIE).mapColor(MapColor.COLOR_GREEN).strength(1F).sound(SoundType.MUD)));
-    public static final RegistryObject<Block> UNSEWN_SPIDER_EYE_CAVITY = registerBlock("unsewn_spider_eye_cavity",
-            () -> new CavityBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.ZOMBIE).mapColor(MapColor.COLOR_GREEN).strength(1F).sound(SoundType.MUD), Items.SPIDER_EYE.getDefaultInstance()));
-    public static final RegistryObject<Block> SPIDER_EYE_CHEST_CAVITY = registerBlock("spider_eye_chest_cavity",
-            () -> new RotatingBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.ZOMBIE).mapColor(MapColor.COLOR_GREEN).strength(1F).sound(SoundType.MUD)));
     public static final RegistryObject<Block> UNSEWN_ENDER_EYE_CAVITY = registerBlock("unsewn_ender_eye_cavity",
             () -> new CavityBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.ZOMBIE).mapColor(MapColor.COLOR_GREEN).strength(1F).sound(SoundType.MUD), Items.ENDER_EYE.getDefaultInstance()));
     public static final RegistryObject<Block> ENDER_EYE_CHEST_CAVITY = registerBlock("ender_eye_chest_cavity",

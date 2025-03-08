@@ -1,8 +1,9 @@
 {
     "parent": "block/block",
     "textures": {
-        "bottom": "cavity:block/cavity_side",
-        "side": "cavity:block/cavity_side",
+        "bottom": "cavity:block/unsewn_ridable_cavity_back",
+        "2": "cavity:block/sewn_ridable_cavity_otherside",
+        "side": "cavity:block/unsewn_ridable_cavity_side",
         "top": "cavity:block/cavity_side",
         "front": "cavity:block/sewn_ridable_cavity_front",
         "particle": "cavity:block/cavity_side"
@@ -16,7 +17,7 @@
                 "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#front", "cullface": "north" },
                 "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#bottom", "cullface": "south" },
                 "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#side", "cullface": "west" },
-                "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#side", "cullface": "east" }
+                "east": {"uv": [0, 0, 16, 16], "texture": "#2"}
             }
         }
     ]

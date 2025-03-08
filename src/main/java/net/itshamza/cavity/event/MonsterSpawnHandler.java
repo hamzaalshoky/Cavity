@@ -4,8 +4,10 @@ import net.itshamza.cavity.Cavity;
 import net.itshamza.cavity.block.ModBlocks;
 import net.itshamza.cavity.entity.ModEntityCreator;
 import net.itshamza.cavity.entity.custom.theoneandonly.*;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -109,9 +111,7 @@ public class MonsterSpawnHandler {
                 monster = new BlazingMonsterEntity(ModEntityCreator.BLAZING_MONSTER.get(), world);
             } else if (blockUnder == (ModBlocks.GUNPOWDER_CHEST_CAVITY.get())) {
                 monster = new ExplodingMonsterEntity(ModEntityCreator.EXPLODING_MONSTER.get(), world);
-            } else if (blockUnder == (ModBlocks.SPIDER_EYE_CHEST_CAVITY.get())) {
-                monster = new SpiderMonsterEntity(ModEntityCreator.SPIDER_MONSTER.get(), world);
-            } else if (blockUnder == (ModBlocks.ENDER_EYE_CHEST_CAVITY.get())) {
+            }else if (blockUnder == (ModBlocks.ENDER_EYE_CHEST_CAVITY.get())) {
                 monster = new CyclopsMonsterEntity(ModEntityCreator.CYCLOPS_MONSTER.get(), world);
             } else if (blockUnder == (ModBlocks.BUNDLE_CHEST_CAVITY.get())) {
                 monster = new BundleMonsterEntity(ModEntityCreator.BUNDLE_MONSTER.get(), world);
@@ -134,6 +134,9 @@ public class MonsterSpawnHandler {
                 monster.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
                 world.addFreshEntity(monster);
                 System.out.println("[DEBUG] " + monster.getClass().getSimpleName() + " spawned at " + pos);
+            }
+            for(ServerPlayer serverplayer : world.getEntitiesOfClass(ServerPlayer.class, monster.getBoundingBox().inflate(5.0D))) {
+                CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayer, monster);
             }
         }
     }

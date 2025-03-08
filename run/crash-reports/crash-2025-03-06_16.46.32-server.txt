@@ -1,0 +1,150 @@
+---- Minecraft Crash Report ----
+// Daisy, daisy...
+
+Time: 2025-03-06 16:46:32
+Description: Ticking player
+
+java.lang.ClassCastException: class java.lang.Boolean cannot be cast to class java.lang.Byte (java.lang.Boolean and java.lang.Byte are in module java.base of loader 'bootstrap')
+	at net.itshamza.cavity.entity.custom.theoneandonly.SpiderMonsterEntity.isClimbing(SpiderMonsterEntity.java:72) ~[%23196!/:?] {re:classloading}
+	at net.itshamza.cavity.entity.custom.theoneandonly.SpiderMonsterEntity.onClimbable(SpiderMonsterEntity.java:46) ~[%23196!/:?] {re:classloading}
+	at net.minecraft.world.entity.LivingEntity.isPushable(LivingEntity.java:2824) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.entity.EntitySelector.lambda$pushableBy$6(EntitySelector.java:44) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at java.util.function.Predicate.lambda$and$0(Predicate.java:69) ~[?:?] {}
+	at net.minecraft.world.level.Level.lambda$getEntities$1(Level.java:642) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.util.AbortableIterationConsumer.lambda$forConsumer$0(AbortableIterationConsumer.java:11) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.entity.EntitySection.getEntities(EntitySection.java:32) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.entity.EntitySectionStorage.lambda$getEntities$1(EntitySectionStorage.java:116) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.entity.EntitySectionStorage.forEachAccessibleNonEmptySection(EntitySectionStorage.java:55) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.entity.EntitySectionStorage.getEntities(EntitySectionStorage.java:115) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.entity.LevelEntityGetterAdapter.get(LevelEntityGetterAdapter.java:37) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.Level.getEntities(Level.java:641) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.entity.LivingEntity.pushEntities(LivingEntity.java:2683) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.entity.LivingEntity.aiStep(LivingEntity.java:2632) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.entity.player.Player.aiStep(Player.java:501) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.entity.LivingEntity.tick(LivingEntity.java:2298) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.entity.player.Player.tick(Player.java:241) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.level.ServerPlayer.doTick(ServerPlayer.java:467) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.tick(ServerGamePacketListenerImpl.java:262) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.network.Connection.tick(Connection.java:263) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:142) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:833) ~[?:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Suspected Mod: 
+	Cavity (cavity), Version: 1.0.0
+		at TRANSFORMER/cavity@1.0.0/net.itshamza.cavity.entity.custom.theoneandonly.SpiderMonsterEntity.isClimbing(SpiderMonsterEntity.java:72)
+Stacktrace:
+	at net.itshamza.cavity.entity.custom.theoneandonly.SpiderMonsterEntity.isClimbing(SpiderMonsterEntity.java:72) ~[%23196!/:?] {re:classloading}
+	at net.itshamza.cavity.entity.custom.theoneandonly.SpiderMonsterEntity.onClimbable(SpiderMonsterEntity.java:46) ~[%23196!/:?] {re:classloading}
+	at net.minecraft.world.entity.LivingEntity.isPushable(LivingEntity.java:2824) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.entity.EntitySelector.lambda$pushableBy$6(EntitySelector.java:44) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at java.util.function.Predicate.lambda$and$0(Predicate.java:69) ~[?:?] {}
+	at net.minecraft.world.level.Level.lambda$getEntities$1(Level.java:642) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.util.AbortableIterationConsumer.lambda$forConsumer$0(AbortableIterationConsumer.java:11) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.entity.EntitySection.getEntities(EntitySection.java:32) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.entity.EntitySectionStorage.lambda$getEntities$1(EntitySectionStorage.java:116) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.entity.EntitySectionStorage.forEachAccessibleNonEmptySection(EntitySectionStorage.java:55) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.entity.EntitySectionStorage.getEntities(EntitySectionStorage.java:115) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.entity.LevelEntityGetterAdapter.get(LevelEntityGetterAdapter.java:37) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.level.Level.getEntities(Level.java:641) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.entity.LivingEntity.pushEntities(LivingEntity.java:2683) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.entity.LivingEntity.aiStep(LivingEntity.java:2632) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.entity.player.Player.aiStep(Player.java:501) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.entity.LivingEntity.tick(LivingEntity.java:2298) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.world.entity.player.Player.tick(Player.java:241) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+-- Player being ticked --
+Details:
+	Entity Type: minecraft:player (net.minecraft.server.level.ServerPlayer)
+	Entity ID: 119
+	Entity Name: Dev
+	Entity's Exact location: 49.53, 2.92, -17.58
+	Entity's Block location: World: (49,2,-18), Section: (at 1,2,14 in 3,0,-2; chunk contains blocks 48,-64,-32 to 63,319,-17), Region: (0,-1; contains chunks 0,-32 to 31,-1, blocks 0,-64,-512 to 511,319,-1)
+	Entity's Momentum: 0.00, -0.16, 0.00
+	Entity's Passengers: []
+	Entity's Vehicle: null
+Stacktrace:
+	at net.minecraft.server.level.ServerPlayer.doTick(ServerPlayer.java:467) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.network.ServerGamePacketListenerImpl.tick(ServerGamePacketListenerImpl.java:262) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.network.Connection.tick(Connection.java:263) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.server.network.ServerConnectionListener.tick(ServerConnectionListener.java:142) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading}
+	at net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:907) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:814) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.server.IntegratedServer.tickServer(IntegratedServer.java:89) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:661) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:251) ~[forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.jar%23191!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:833) ~[?:?] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.20.1
+	Minecraft Version ID: 1.20.1
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 17.0.7, Eclipse Adoptium
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Eclipse Adoptium
+	Memory: 215007112 bytes (205 MiB) / 1342177280 bytes (1280 MiB) up to 4280287232 bytes (4082 MiB)
+	CPUs: 4
+	Processor Vendor: GenuineIntel
+	Processor Name: Intel(R) Core(TM) i3-9100F CPU @ 3.60GHz
+	Identifier: Intel64 Family 6 Model 158 Stepping 10
+	Microarchitecture: Coffee Lake
+	Frequency (GHz): 3.60
+	Number of physical packages: 1
+	Number of physical CPUs: 4
+	Number of logical CPUs: 4
+	Graphics card #0 name: NVIDIA GeForce GTX 1050 Ti
+	Graphics card #0 vendor: NVIDIA (0x10de)
+	Graphics card #0 VRAM (MB): 4095.00
+	Graphics card #0 deviceId: 0x1c82
+	Graphics card #0 versionInfo: DriverVersion=32.0.15.6094
+	Memory slot #0 capacity (MB): 16384.00
+	Memory slot #0 clockSpeed (GHz): 2.13
+	Memory slot #0 type: DDR4
+	Virtual memory max (MB): 21700.43
+	Virtual memory used (MB): 17910.53
+	Swap memory total (MB): 5376.00
+	Swap memory used (MB): 392.00
+	JVM Flags: 1 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump
+	Server Running: true
+	Player Count: 1 / 8; [ServerPlayer['Dev'/119, l='ServerLevel[New World]', x=49.53, y=2.92, z=-17.58]]
+	Data Packs: vanilla, mod:forge, mod:cavity
+	Enabled Feature Flags: minecraft:vanilla
+	World Generation: Stable
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'forge'; Server brand changed to 'forge'
+	Launched Version: MOD_DEV
+	ModLauncher: 10.0.9+10.0.9+main.dcd20f30
+	ModLauncher launch target: forgeclientuserdev
+	ModLauncher naming: mcp
+	ModLauncher services: 
+		mixin-0.8.5.jar mixin PLUGINSERVICE 
+		eventbus-6.0.5.jar eventbus PLUGINSERVICE 
+		fmlloader-1.20.1-47.3.0.jar slf4jfixer PLUGINSERVICE 
+		fmlloader-1.20.1-47.3.0.jar object_holder_definalize PLUGINSERVICE 
+		fmlloader-1.20.1-47.3.0.jar runtime_enum_extender PLUGINSERVICE 
+		fmlloader-1.20.1-47.3.0.jar capability_token_subclass PLUGINSERVICE 
+		accesstransformers-8.0.4.jar accesstransformer PLUGINSERVICE 
+		fmlloader-1.20.1-47.3.0.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-10.0.9.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		minecraft@1.0
+		lowcodefml@null
+		javafml@null
+	Mod List: 
+		forge-1.20.1-47.3.0_mapped_official_1.20.1-recomp.|Minecraft                     |minecraft                     |1.20.1              |DONE      |Manifest: a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		                                                  |Forge                         |forge                         |47.3.0              |DONE      |Manifest: NOSIGNATURE
+		main                                              |Cavity                        |cavity                        |1.0.0               |DONE      |Manifest: NOSIGNATURE
+	Crash Report UUID: 2fb3a68f-8175-4ecb-a94d-a2e83f2d7607
+	FML: 47.3
+	Forge: net.minecraftforge:47.3.0

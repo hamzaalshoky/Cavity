@@ -28,13 +28,25 @@ public class BundleMonsterModel<T extends BundleMonsterEntity> extends Hierarchi
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, -4.0F));
 
-		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -37.0F, -8.0F, 16.0F, 37.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-4.5F, -4.75F, -15.0F, 9.0F, 7.0F, 18.0F, new CubeDeformation(0.0F))
+				.texOffs(36, 33).addBox(-1.5F, -3.75F, -17.0F, 3.0F, 4.0F, 2.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 25).addBox(-4.5F, -14.75F, -6.0F, 9.0F, 10.0F, 9.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 44).addBox(-3.5F, -6.75F, -13.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+				.texOffs(36, 39).addBox(1.5F, -8.75F, -13.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -4.25F, 12.0F));
 
-		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 53).addBox(-8.0F, -48.0F, -8.0F, 16.0F, 11.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition hand_l = body.addOrReplaceChild("hand_l", CubeListBuilder.create().texOffs(36, 25).addBox(-1.0F, -1.0F, -1.5F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(3.5F, 0.25F, -11.5F));
 
-		return LayerDefinition.create(meshdefinition, 128, 128);
+		PartDefinition hand_r = body.addOrReplaceChild("hand_r", CubeListBuilder.create().texOffs(36, 25).addBox(-2.0F, -1.0F, -1.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-3.5F, 0.25F, -12.0F));
+
+		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(59.5F, -31.75F, -12.0F));
+
+		PartDefinition leg_r = all.addOrReplaceChild("leg_r", CubeListBuilder.create().texOffs(36, 25).addBox(-2.0F, -1.0F, 5.5F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-3.5F, -4.0F, 0.5F));
+
+		PartDefinition leg_l = all.addOrReplaceChild("leg_l", CubeListBuilder.create().texOffs(36, 25).addBox(-1.0F, -1.0F, -1.5F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(3.5F, -4.0F, 7.5F));
+
+		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
 
 	@Override
@@ -42,8 +54,8 @@ public class BundleMonsterModel<T extends BundleMonsterEntity> extends Hierarchi
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(entity, netHeadYaw, headPitch, ageInTicks);
 
-		//this.animateWalk(ModAnimationDefinitions.BEAVER_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
-		this.animate(entity.idleAnimationState, ModAnimationDefinitions.IDLE, ageInTicks, 1f);
+		this.animateWalk(ModAnimationDefinitions.BUNDLE_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.animate(entity.idleAnimationState, ModAnimationDefinitions.BUNDLE_IDLE, ageInTicks, 1f);
 		//this.animate(entity.swimmingAnimationState, ModAnimationDefinitions.BEAVER_SWIM, ageInTicks, 1f);
 	}
 	private void applyHeadRotation(BundleMonsterEntity pEntity, float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {

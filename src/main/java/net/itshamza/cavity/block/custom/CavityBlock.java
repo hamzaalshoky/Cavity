@@ -59,13 +59,13 @@ public class CavityBlock extends Block {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (!world.isClientSide) {
-            // Check if the player is holding a valid item
             Block transformedBlock = getUnsewnVersion(itemStack.getItem());
 
             if (transformedBlock != null) {
-                world.setBlockAndUpdate(pos, transformedBlock.defaultBlockState());
+                BlockState newState = transformedBlock.defaultBlockState()
+                        .setValue(FACING, state.getValue(FACING));
+                world.setBlockAndUpdate(pos, newState);
 
-                // Consume the item if necessary (optional)
                 if (!player.isCreative()) {
                     itemStack.shrink(1);
                 }
@@ -77,7 +77,10 @@ public class CavityBlock extends Block {
             if (itemStack.getItem() instanceof ShearsItem) {
                 Block newBlock = getTransformedBlock(itemToUse);
 
-                world.setBlockAndUpdate(pos, newBlock.defaultBlockState());
+                BlockState newState = newBlock.defaultBlockState()
+                        .setValue(FACING, state.getValue(FACING));
+
+                world.setBlockAndUpdate(pos, newState);
 
                 itemStack.hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(hand));
                 return InteractionResult.SUCCESS;
@@ -89,7 +92,6 @@ public class CavityBlock extends Block {
     private Block getUnsewnVersion(Item item) {
         if (item == Items.BLAZE_POWDER) return ModBlocks.UNSEWN_BLAZE_CAVITY.get();
         if (item == Items.GUNPOWDER) return ModBlocks.UNSEWN_GUNPOWDER_CAVITY.get();
-        if (item == Items.SPIDER_EYE) return ModBlocks.UNSEWN_SPIDER_EYE_CAVITY.get();
         if (item == Items.ENDER_EYE) return ModBlocks.UNSEWN_ENDER_EYE_CAVITY.get();
         if (item == Items.BUNDLE) return ModBlocks.UNSEWN_BUNDLE_CAVITY.get();
         if (item == Items.COPPER_INGOT) return ModBlocks.UNSEWN_COPPER_CAVITY.get();
@@ -103,7 +105,6 @@ public class CavityBlock extends Block {
     private Block getTransformedBlock(ItemStack storedItem) {
         if (storedItem.is(Items.BLAZE_POWDER)) return ModBlocks.BLAZE_CHEST_CAVITY.get();
         if (storedItem.is(Items.GUNPOWDER)) return ModBlocks.GUNPOWDER_CHEST_CAVITY.get();
-        if (storedItem.is(Items.SPIDER_EYE)) return ModBlocks.SPIDER_EYE_CHEST_CAVITY.get();
         if (storedItem.is(Items.ENDER_EYE)) return ModBlocks.ENDER_EYE_CHEST_CAVITY.get();
         if (storedItem.is(Items.BUNDLE)) return ModBlocks.BUNDLE_CHEST_CAVITY.get();
         if (storedItem.is(Items.COPPER_INGOT)) return ModBlocks.COPPER_CHEST_CAVITY.get();
