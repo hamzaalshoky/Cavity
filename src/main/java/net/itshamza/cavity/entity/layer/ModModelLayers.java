@@ -17,13 +17,11 @@ public class ModModelLayers {
             new ResourceLocation(Cavity.MOD_ID, "electric_monster_layer"), "electric_monster_layer");
     public static final ModelLayerLocation EXPLODING_MONSTER_LAYER = new ModelLayerLocation(
             new ResourceLocation(Cavity.MOD_ID, "exploding_monster_layer"), "exploding_monster_layer");
-    public static final ModelLayerLocation ICE_MONSTER_LAYER = new ModelLayerLocation(
-            new ResourceLocation(Cavity.MOD_ID, "ice_monster_layer"), "ice_monster_layer");
     public static final ModelLayerLocation RIDABLE_MONSTER_LAYER = new ModelLayerLocation(
             new ResourceLocation(Cavity.MOD_ID, "ridable_monster_layer"), "ridable_monster_layer");
     public static final ModelLayerLocation ROTTEN_MONSTER_LAYER = new ModelLayerLocation(
             new ResourceLocation(Cavity.MOD_ID, "rotten_monster_layer"), "rotten_monster_layer");
-    public static final ModelLayerLocation SPIDER_MONSTER_LAYER = new ModelLayerLocation(
-            new ResourceLocation(Cavity.MOD_ID, "spider_monster_layer"), "spider_monster_layer");
+    public static final ModelLayerLocation FLAMELING_LAYER = new ModelLayerLocation(
+            new ResourceLocation(Cavity.MOD_ID, "flameling_layer"), "flameling_layer");
 
 }

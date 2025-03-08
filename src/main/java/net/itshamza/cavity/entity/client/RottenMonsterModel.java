@@ -17,11 +17,15 @@ public class RottenMonsterModel<T extends RottenMonsterEntity> extends Hierarchi
 	private final ModelPart all;
 	private final ModelPart body;
 	private final ModelPart head;
+	private final ModelPart headtwo;
+	private final ModelPart headthree;
 
 	public RottenMonsterModel(ModelPart root) {
 		this.all = root.getChild("all");
 		this.body = this.all.getChild("body");
-		this.head = this.body.getChild("head");
+		this.head = this.body.getChild("head1");
+		this.headtwo = this.body.getChild("head_r");
+		this.headthree = this.body.getChild("head_l");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -30,11 +34,29 @@ public class RottenMonsterModel<T extends RottenMonsterEntity> extends Hierarchi
 
 		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -37.0F, -8.0F, 16.0F, 37.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition leg_l = all.addOrReplaceChild("leg_l", CubeListBuilder.create().texOffs(0, 38).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, -12.0F, 1.0F));
 
-		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 53).addBox(-8.0F, -48.0F, -8.0F, 16.0F, 11.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition leg_r = all.addOrReplaceChild("leg_r", CubeListBuilder.create().texOffs(44, 16).mirror().addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-3.0F, -12.0F, 1.0F));
 
-		return LayerDefinition.create(meshdefinition, 128, 128);
+		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-6.0F, -16.0F, 1.0F, 8.0F, 16.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 20).addBox(2.0F, -24.0F, 1.0F, 8.0F, 14.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 54).addBox(-4.0F, -22.0F, 3.0F, 6.0F, 6.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, -12.0F, -2.0F));
+
+		PartDefinition hand_l2 = body.addOrReplaceChild("hand_l2", CubeListBuilder.create().texOffs(16, 46).addBox(0.0F, -3.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(2.0F, -2.0F, 3.0F));
+
+		PartDefinition hand_r = body.addOrReplaceChild("hand_r", CubeListBuilder.create().texOffs(48, 0).addBox(-4.0F, -9.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-6.0F, -5.0F, 3.0F));
+
+		PartDefinition hand_l1 = body.addOrReplaceChild("hand_l1", CubeListBuilder.create().texOffs(32, 48).addBox(0.0F, -2.0F, -1.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(10.0F, -12.0F, 2.0F));
+
+		PartDefinition head1 = body.addOrReplaceChild("head1", CubeListBuilder.create().texOffs(24, 0).addBox(-4.0F, -12.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(16, 38).addBox(-6.0F, -9.0F, -1.0F, 2.0F, 5.0F, 2.0F, new CubeDeformation(0.0F))
+				.texOffs(48, 48).addBox(-4.0F, -18.0F, -2.0F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -22.0F, 2.0F));
+
+		PartDefinition head_l = body.addOrReplaceChild("head_l", CubeListBuilder.create().texOffs(24, 16).addBox(0.0F, -8.0F, -3.0F, 4.0F, 10.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(7.0F, -22.0F, 3.0F));
+
+		PartDefinition head_r = body.addOrReplaceChild("head_r", CubeListBuilder.create().texOffs(24, 32).addBox(-2.0F, -8.0F, -3.0F, 4.0F, 8.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-6.0F, -16.0F, 2.0F));
+
+		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
 
 	@Override
@@ -42,8 +64,8 @@ public class RottenMonsterModel<T extends RottenMonsterEntity> extends Hierarchi
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(entity, netHeadYaw, headPitch, ageInTicks);
 
-		//this.animateWalk(ModAnimationDefinitions.BEAVER_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
-		this.animate(entity.idleAnimationState, ModAnimationDefinitions.IDLE, ageInTicks, 1f);
+		this.animateWalk(ModAnimationDefinitions.ROTTEN_RUN, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.animate(entity.idleAnimationState, ModAnimationDefinitions.ROTTEN_IDLE, ageInTicks, 1f);
 		//this.animate(entity.swimmingAnimationState, ModAnimationDefinitions.BEAVER_SWIM, ageInTicks, 1f);
 	}
 	private void applyHeadRotation(RottenMonsterEntity pEntity, float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
@@ -52,6 +74,10 @@ public class RottenMonsterModel<T extends RottenMonsterEntity> extends Hierarchi
 
 		this.head.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
 		this.head.xRot = pHeadPitch * ((float)Math.PI / 180F);
+		this.headtwo.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
+		this.headtwo.xRot = pHeadPitch * ((float)Math.PI / 180F);
+		this.headthree.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
+		this.headthree.xRot = pHeadPitch * ((float)Math.PI / 180F);
 	}
 
 

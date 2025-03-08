@@ -30,13 +30,14 @@
   "entity.cavity.cyclops_monster": "Cyclops Abomination",
   "entity.cavity.electric_monster": "Electric Abomination",
   "entity.cavity.exploding_monster": "Exploding Abomination",
-  "entity.cavity.ice_monster": "Frozen Abomination",
   "entity.cavity.ridable_monster": "Hunchback Abomination",
   "entity.cavity.rotten_monster": "Rotten Abomination",
-  "entity.cavity.spider_monster": "Arachnid Abomination",
+  "entity.cavity.flameling": "Flameling",
 
   "advancements.adventure.its_alive.title": "It's Alive!",
   "advancements.adventure.its_alive.description": "Create an undead abomination out of pieces of rotten flesh and a chest cavity",
   "advancements.adventure.nobody.title": "My name is Nobody.",
-  "advancements.adventure.nobody.description": "Anger a Cyclops abomination, An Abomination corrupted by the void"
+  "advancements.adventure.nobody.description": "Anger a Cyclops abomination, An Abomination corrupted by the void",
+  "advancements.adventure.crime.title": "This is a Crime against Nature",
+  "advancements.adventure.crime.description": "Summon a Rotten abomination, w-what even is this thing?"
 }

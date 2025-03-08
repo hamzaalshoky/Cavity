@@ -28,7 +28,7 @@ public class ModEntityCreator {
                     .sized(0.6f, 2.5f).build("monster"));
     public static final RegistryObject<EntityType<BlazingMonsterEntity>> BLAZING_MONSTER =
             ENTITY_TYPES.register("blazing_monster", () -> EntityType.Builder.of(BlazingMonsterEntity::new, MobCategory.MONSTER)
-                    .sized(1f, 3f).build("blazing_monster"));
+                    .sized(1.4f, 2.2f).build("blazing_monster"));
     public static final RegistryObject<EntityType<BundleMonsterEntity>> BUNDLE_MONSTER =
             ENTITY_TYPES.register("bundle_monster", () -> EntityType.Builder.of(BundleMonsterEntity::new, MobCategory.MONSTER)
                     .sized(0.8f, 1.2f).build("bundle_monster"));
@@ -41,15 +41,15 @@ public class ModEntityCreator {
     public static final RegistryObject<EntityType<ExplodingMonsterEntity>> EXPLODING_MONSTER =
             ENTITY_TYPES.register("exploding_monster", () -> EntityType.Builder.of(ExplodingMonsterEntity::new, MobCategory.MONSTER)
                     .sized(1f, 1.7f).build("exploding_monster"));
-    public static final RegistryObject<EntityType<IceMonsterEntity>> ICE_MONSTER =
-            ENTITY_TYPES.register("ice_monster", () -> EntityType.Builder.of(IceMonsterEntity::new, MobCategory.MONSTER)
-                    .sized(1f, 3f).build("ice_monster"));
     public static final RegistryObject<EntityType<RidableMonsterEntity>> RIDABLE_MONSTER =
             ENTITY_TYPES.register( "ridable_monster", () -> EntityType.Builder.of(RidableMonsterEntity::new, MobCategory.MONSTER)
                     .sized(0.9f, 2.3f).build("ridable_monster"));
     public static final RegistryObject<EntityType<RottenMonsterEntity>> ROTTEN_MONSTER =
             ENTITY_TYPES.register("rotten_monster", () -> EntityType.Builder.of(RottenMonsterEntity::new, MobCategory.MONSTER)
-                    .sized(1f, 3f).build("rotten_monster"));
+                    .sized(0.9f, 3.2f).build("rotten_monster"));
+    public static final RegistryObject<EntityType<FlamelingEntity>> FLAMELING =
+            ENTITY_TYPES.register("flameling", () -> EntityType.Builder.of(FlamelingEntity::new, MobCategory.MONSTER)
+                    .sized(0.4f, 0.5f).build("flameling"));
 
 
     //RENDERERS
@@ -62,10 +62,10 @@ public class ModEntityCreator {
         event.registerEntityRenderer(ModEntityCreator.CYCLOPS_MONSTER.get(), CyclopsMonsterRenderer::new);
         event.registerEntityRenderer(ModEntityCreator.ELECTRIC_MONSTER.get(), ElectricMonsterRenderer::new);
         event.registerEntityRenderer(ModEntityCreator.EXPLODING_MONSTER.get(), ExplodingMonsterRenderer::new);
-        event.registerEntityRenderer(ModEntityCreator.ICE_MONSTER.get(), IceMonsterRenderer::new);
         event.registerEntityRenderer(ModEntityCreator.RIDABLE_MONSTER.get(), RidableMonsterRenderer::new);
         event.registerEntityRenderer(ModEntityCreator.ROTTEN_MONSTER.get(), RottenMonsterRenderer::new);
         event.registerEntityRenderer(ModEntityCreator.ROTTEN_MONSTER.get(), RottenMonsterRenderer::new);
+        event.registerEntityRenderer(ModEntityCreator.FLAMELING.get(), FlamelingRenderer::new);
     }
 
     //LAYERS
@@ -77,10 +77,10 @@ public class ModEntityCreator {
         event.registerLayerDefinition(ModModelLayers.BUNDLE_MONSTER_LAYER, BundleMonsterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.CYCLOPS_MONSTER_LAYER, CyclopsMonsterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.ELECTRIC_MONSTER_LAYER, ElectricMonsterModel::createBodyLayer);
-        event.registerLayerDefinition(ModModelLayers.ICE_MONSTER_LAYER, IceMonsterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.EXPLODING_MONSTER_LAYER, ExplodingMonsterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.RIDABLE_MONSTER_LAYER, RidableMonsterModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.ROTTEN_MONSTER_LAYER, RottenMonsterModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.FLAMELING_LAYER, FlamelingModel::createBodyLayer);
     }
 
     //ATTRIBUTES
@@ -93,9 +93,9 @@ public class ModEntityCreator {
         event.put(ModEntityCreator.CYCLOPS_MONSTER.get(), CyclopsMonsterEntity.createAttributes().build());
         event.put(ModEntityCreator.ELECTRIC_MONSTER.get(), ElectricMonsterEntity.createAttributes().build());
         event.put(ModEntityCreator.EXPLODING_MONSTER.get(), ExplodingMonsterEntity.createAttributes().build());
-        event.put(ModEntityCreator.ICE_MONSTER.get(), IceMonsterEntity.createAttributes().build());
         event.put(ModEntityCreator.RIDABLE_MONSTER.get(), RidableMonsterEntity.createAttributes().build());
         event.put(ModEntityCreator.ROTTEN_MONSTER.get(), RottenMonsterEntity.createAttributes().build());
+        event.put(ModEntityCreator.FLAMELING.get(), FlamelingEntity.createAttributes().build());
     }
 
     public static void register(IEventBus eventBus) {

@@ -86,7 +86,6 @@ public class Cavity
             event.accept(ModBlocks.CORPSE_HEAD);
             event.accept(ModBlocks.ENDER_EYE_CHEST_CAVITY);
             event.accept(ModBlocks.FLESH_BLOCK);
-            event.accept(ModBlocks.ICE_CHEST_CAVITY);
             event.accept(ModBlocks.RIDABLE_CHEST_CAVITY);
             event.accept(ModBlocks.ROTTEN_FLESH_CHEST_CAVITY);
             event.accept(ModBlocks.SEWN_CHEST_CAVITY);
@@ -95,7 +94,6 @@ public class Cavity
             event.accept(ModBlocks.UNSEWN_COPPER_CAVITY);
             event.accept(ModBlocks.UNSEWN_ENDER_EYE_CAVITY);
             event.accept(ModBlocks.UNSEWN_GUNPOWDER_CAVITY);
-            event.accept(ModBlocks.UNSEWN_ICE_CAVITY);
             event.accept(ModBlocks.UNSEWN_RIDABLE_CAVITY);
             event.accept(ModBlocks.UNSEWN_ROTTEN_FLESH_CAVITY);
         }

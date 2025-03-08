@@ -28,13 +28,19 @@ public class BlazingMonsterModel<T extends BlazingMonsterEntity> extends Hierarc
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create().texOffs(0, 0).addBox(-12.0F, -8.0F, -10.0F, 24.0F, 8.0F, 19.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -37.0F, -8.0F, 16.0F, 37.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 27).addBox(-10.0F, -16.0F, -9.0F, 20.0F, 16.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -8.0F, 2.0F));
 
-		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 53).addBox(-8.0F, -48.0F, -8.0F, 16.0F, 11.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition hand = body.addOrReplaceChild("hand", CubeListBuilder.create().texOffs(0, 59).addBox(-6.0F, -4.0F, -14.0F, 6.0F, 8.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(-10.0F, -4.0F, 2.0F));
 
-		return LayerDefinition.create(meshdefinition, 128, 128);
+		PartDefinition hand2 = body.addOrReplaceChild("hand2", CubeListBuilder.create().texOffs(0, 59).mirror().addBox(0.0F, -4.0F, -14.0F, 6.0F, 8.0F, 16.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(10.0F, -4.0F, 2.0F));
+
+		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(44, 59).addBox(-6.0F, -10.0F, -4.0F, 12.0F, 10.0F, 10.0F, new CubeDeformation(0.0F))
+				.texOffs(72, 27).addBox(-2.0F, -16.0F, -6.0F, 4.0F, 16.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(72, 47).addBox(-2.0F, -6.0F, -8.0F, 4.0F, 6.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -16.0F, 0.0F));
+
+		return LayerDefinition.create(meshdefinition, 96, 96);
 	}
 
 	@Override
@@ -43,7 +49,11 @@ public class BlazingMonsterModel<T extends BlazingMonsterEntity> extends Hierarc
 		this.applyHeadRotation(entity, netHeadYaw, headPitch, ageInTicks);
 
 		//this.animateWalk(ModAnimationDefinitions.BEAVER_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
-		this.animate(entity.idleAnimationState, ModAnimationDefinitions.IDLE, ageInTicks, 1f);
+		if(entity.isInflated()){
+			this.animate(entity.idleAnimationState, ModAnimationDefinitions.BLAZING_INFLATE, ageInTicks, 1f);
+		}else{
+			this.animate(entity.idleAnimationState, ModAnimationDefinitions.BLAZING_IDLE, ageInTicks, 1f);
+		}
 		//this.animate(entity.swimmingAnimationState, ModAnimationDefinitions.BEAVER_SWIM, ageInTicks, 1f);
 	}
 	private void applyHeadRotation(BlazingMonsterEntity pEntity, float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {

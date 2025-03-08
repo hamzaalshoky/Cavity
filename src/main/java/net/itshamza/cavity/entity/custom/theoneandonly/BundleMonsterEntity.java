@@ -25,6 +25,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
+import java.util.UUID;
 
 public class BundleMonsterEntity extends MonsterEntity implements ContainerListener, HasCustomInventoryScreen {
     private static final EntityDataAccessor<Boolean> ATTACKING =
@@ -36,6 +38,9 @@ public class BundleMonsterEntity extends MonsterEntity implements ContainerListe
     private static final EntityDataAccessor<Boolean> DATA_ID_CHEST = SynchedEntityData.defineId(BundleMonsterEntity.class, EntityDataSerializers.BOOLEAN);
     public static final int INV_CHEST_COUNT = 15;
     protected SimpleContainer inventory = new SimpleContainer(27);
+    private static final EntityDataAccessor<Optional<UUID>> OWNER_UUID =
+            SynchedEntityData.defineId(BundleMonsterEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+
 
     public SimpleContainer getInventory() {
         return inventory;
@@ -46,6 +51,7 @@ public class BundleMonsterEntity extends MonsterEntity implements ContainerListe
     }
 
     protected void registerGoals() {
+        this.goalSelector.addGoal(1, new FollowOwnerGoal(this, 1.2D, 5.0F, 2.0F));
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new RandomSwimmingGoal(this,1.0D, 1));
@@ -147,6 +153,7 @@ public class BundleMonsterEntity extends MonsterEntity implements ContainerListe
         super.defineSynchedData();
         this.entityData.define(ATTACKING, false);
         this.entityData.define(DATA_ID_CHEST, false);
+        this.entityData.define(OWNER_UUID, Optional.empty());
     }
 
     protected void updateContainerEquipment() {
@@ -252,7 +259,7 @@ public class BundleMonsterEntity extends MonsterEntity implements ContainerListe
 
             p_30496_.put("Items", listtag);
         }
-
+        entityData.get(OWNER_UUID).ifPresent(uuid -> p_30496_.putUUID("OwnerUUID", uuid));
     }
 
     public void readAdditionalSaveData(CompoundTag p_30488_) {
@@ -269,6 +276,9 @@ public class BundleMonsterEntity extends MonsterEntity implements ContainerListe
                     this.inventory.setItem(j, ItemStack.of(compoundtag));
                 }
             }
+        }
+        if (p_30488_.hasUUID("OwnerUUID")) {
+            entityData.set(OWNER_UUID, Optional.of(p_30488_.getUUID("OwnerUUID")));
         }
 
         this.updateContainerEquipment();
@@ -339,4 +349,41 @@ public class BundleMonsterEntity extends MonsterEntity implements ContainerListe
         return new BundleMonsterMenu(id, playerInventory);
     }
 
+    public void setOwner(Player player) {
+        this.entityData.set(OWNER_UUID, Optional.of(player.getUUID()));
+    }
+
+    @Nullable
+    public Player getOwner() {
+        UUID ownerUUID = this.entityData.get(OWNER_UUID).orElse(null);
+        return ownerUUID == null ? null : this.level().getPlayerByUUID(ownerUUID);
+    }
+
+    public class FollowOwnerGoal extends Goal {
+        private final BundleMonsterEntity monster;
+        private Player owner;
+        private final double speed;
+        private final float minDist;
+        private final float maxDist;
+
+        public FollowOwnerGoal(BundleMonsterEntity monster, double speed, float maxDist, float minDist) {
+            this.monster = monster;
+            this.speed = speed;
+            this.maxDist = maxDist;
+            this.minDist = minDist;
+        }
+
+        @Override
+        public boolean canUse() {
+            this.owner = monster.getOwner();
+            return this.owner != null && this.monster.distanceToSqr(this.owner) > (minDist * minDist);
+        }
+
+        @Override
+        public void tick() {
+            if (owner != null && monster.distanceToSqr(owner) > (maxDist * maxDist)) {
+                this.monster.getNavigation().moveTo(owner, speed);
+            }
+        }
+    }
 }

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "cavity:corpse_head"
+    },
+    "title": {
+      "translate": "advancements.adventure.crime.title"
+    },
+    "description": {
+      "translate": "advancements.adventure.crime.description"
+    }
+  },
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "spawn_abomination": {
+      "trigger": "minecraft:summoned_entity",
+      "conditions": {
+        "entity": {
+          "condition": "minecraft:match_any",
+          "predicates": [
+            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:rotten_monster" } }
+          ]
+        }
+      }
+    }
+  },
+  "requirements": [["spawn_abomination"]]
+}

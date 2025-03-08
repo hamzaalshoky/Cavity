@@ -25,7 +25,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.ENDER_EYE_CHEST_CAVITY.get());
         this.dropSelf(ModBlocks.COPPER_CHEST_CAVITY.get());
         this.dropSelf(ModBlocks.GUNPOWDER_CHEST_CAVITY.get());
-        this.dropSelf(ModBlocks.ICE_CHEST_CAVITY.get());
         this.dropSelf(ModBlocks.RIDABLE_CHEST_CAVITY.get());
         this.dropSelf(ModBlocks.ROTTEN_FLESH_CHEST_CAVITY.get());
 
@@ -34,7 +33,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.UNSEWN_ENDER_EYE_CAVITY.get());
         this.dropSelf(ModBlocks.UNSEWN_COPPER_CAVITY.get());
         this.dropSelf(ModBlocks.UNSEWN_GUNPOWDER_CAVITY.get());
-        this.dropSelf(ModBlocks.UNSEWN_ICE_CAVITY.get());
         this.dropSelf(ModBlocks.UNSEWN_RIDABLE_CAVITY.get());
         this.dropSelf(ModBlocks.UNSEWN_ROTTEN_FLESH_CAVITY.get());
 

@@ -55,7 +55,6 @@ public class FilledCavityBlock extends Block {
         if (storedItem.is(Items.ENDER_EYE)) return ModBlocks.ENDER_EYE_CHEST_CAVITY.get();
         if (storedItem.is(Items.BUNDLE)) return ModBlocks.BUNDLE_CHEST_CAVITY.get();
         if (storedItem.is(Items.COPPER_INGOT)) return ModBlocks.COPPER_CHEST_CAVITY.get();
-        if (storedItem.is(Items.ICE)) return ModBlocks.ICE_CHEST_CAVITY.get();
         if (storedItem.is(Items.ROTTEN_FLESH)) return ModBlocks.ROTTEN_FLESH_CHEST_CAVITY.get();
         return ModBlocks.SEWN_CHEST_CAVITY.get();
     }

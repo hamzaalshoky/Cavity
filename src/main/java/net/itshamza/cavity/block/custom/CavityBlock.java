@@ -95,7 +95,6 @@ public class CavityBlock extends Block {
         if (item == Items.ENDER_EYE) return ModBlocks.UNSEWN_ENDER_EYE_CAVITY.get();
         if (item == Items.BUNDLE) return ModBlocks.UNSEWN_BUNDLE_CAVITY.get();
         if (item == Items.COPPER_INGOT) return ModBlocks.UNSEWN_COPPER_CAVITY.get();
-        if (item == Items.ICE) return ModBlocks.UNSEWN_ICE_CAVITY.get();
         if (item == Items.ROTTEN_FLESH) return ModBlocks.UNSEWN_ROTTEN_FLESH_CAVITY.get();
         if (item == Items.SADDLE) return ModBlocks.UNSEWN_RIDABLE_CAVITY.get();
 
@@ -108,7 +107,6 @@ public class CavityBlock extends Block {
         if (storedItem.is(Items.ENDER_EYE)) return ModBlocks.ENDER_EYE_CHEST_CAVITY.get();
         if (storedItem.is(Items.BUNDLE)) return ModBlocks.BUNDLE_CHEST_CAVITY.get();
         if (storedItem.is(Items.COPPER_INGOT)) return ModBlocks.COPPER_CHEST_CAVITY.get();
-        if (storedItem.is(Items.ICE)) return ModBlocks.ICE_CHEST_CAVITY.get();
         if (storedItem.is(Items.ROTTEN_FLESH)) return ModBlocks.ROTTEN_FLESH_CHEST_CAVITY.get();
         if (storedItem.is(Items.SADDLE)) return ModBlocks.RIDABLE_CHEST_CAVITY.get();
         return ModBlocks.SEWN_CHEST_CAVITY.get();

@@ -1,5 +1,6 @@
 package net.itshamza.cavity.entity.custom.theoneandonly;
 
+import net.itshamza.cavity.entity.ModEntityCreator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -7,10 +8,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -23,6 +21,7 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public class BlazingMonsterEntity extends MonsterEntity {
     private static final EntityDataAccessor<Boolean> ATTACKING =
@@ -31,6 +30,13 @@ public class BlazingMonsterEntity extends MonsterEntity {
     public int idleAnimationTimeout = 0;
     public final AnimationState attackAnimationState = new AnimationState();
     public int attackAnimationTimeout = 0;
+    private int inflationCooldown = 0;
+    private static final int INFLATION_COOLDOWN_TIME = 100;
+    private static final EntityDataAccessor<Boolean> INFLATED =
+            SynchedEntityData.defineId(BlazingMonsterEntity.class, EntityDataSerializers.BOOLEAN);
+
+    private int inflationTicks = 0;
+    private static final int INFLATION_DURATION = 300;
 
 
     public BlazingMonsterEntity(EntityType<? extends MonsterEntity> p_27557_, Level p_27558_) {
@@ -41,10 +47,8 @@ public class BlazingMonsterEntity extends MonsterEntity {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new RandomSwimmingGoal(this,1.0D, 1));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, (double)1.2F, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -54,15 +58,12 @@ public class BlazingMonsterEntity extends MonsterEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return WaterAnimal.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 100D)
-                .add(Attributes.MOVEMENT_SPEED, 0.2D)
+                .add(Attributes.MAX_HEALTH, 80D)
+                .add(Attributes.MOVEMENT_SPEED, 0D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.1D)
-                .add(Attributes.ATTACK_DAMAGE, 6f);
-    }
-
-    public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
-        return !this.hasCustomName();
+                .add(Attributes.ATTACK_DAMAGE, 6f)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 1f);
     }
 
     // ANIMATIONS //
@@ -111,9 +112,65 @@ public class BlazingMonsterEntity extends MonsterEntity {
     public void tick() {
         super.tick();
 
-        if (this.level().isClientSide()) {
-            this.setupAnimationStates();
+        if (!this.level().isClientSide) {
+            LivingEntity target = this.getTarget();
+
+            if (target != null) {
+                double distance = this.distanceToSqr(target);
+
+                if (distance > 2.0D && !this.isInflated() && inflationCooldown <= 0) {
+                    this.setInflated(true);
+                    this.inflationTicks = INFLATION_DURATION;
+                    this.inflationCooldown = INFLATION_COOLDOWN_TIME;
+                }
+
+                if (this.isInflated()) {
+                    if (--this.inflationTicks <= 0) {
+                        this.setInflated(false);
+                    }
+                }
+
+                if (inflationCooldown > 0) {
+                    inflationCooldown--;
+                }
+            }
         }
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (source.is(DamageTypes.IN_FIRE) || source.is(DamageTypes.ON_FIRE) ||
+                source.is(DamageTypes.LAVA) || source.is(DamageTypes.HOT_FLOOR) ||
+                source.is(DamageTypes.FIREBALL)) {
+            return false;
+        }
+        if (this.isInflated()) {
+            this.spawnFlamelings();
+            this.setInflated(false);
+            return false;
+        }
+        return super.hurt(source, amount);
+    }
+
+    private void spawnFlamelings() {
+        for (int i = 0; i < 3; i++) {
+            FlamelingEntity flameling = new FlamelingEntity(ModEntityCreator.FLAMELING.get(), this.level());
+            flameling.setPos(this.getX() + random.nextFloat() - 0.5, this.getY(), this.getZ() + random.nextFloat() - 0.5);
+            this.level().addFreshEntity(flameling);
+        }
+    }
+
+    public boolean isInflated() {
+        return this.entityData.get(INFLATED);
+    }
+
+    public void setInflated(boolean inflated) {
+        this.entityData.set(INFLATED, inflated);
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distance) {
+        return false;
     }
 
     public void setAttacking(boolean attacking) {
@@ -128,16 +185,7 @@ public class BlazingMonsterEntity extends MonsterEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(ATTACKING, false);
-    }
-
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if (source.is(DamageTypes.IN_FIRE) || source.is(DamageTypes.ON_FIRE) ||
-                source.is(DamageTypes.LAVA) || source.is(DamageTypes.HOT_FLOOR) ||
-                source.is(DamageTypes.FIREBALL)) {
-            return false;
-        }
-        return super.hurt(source, amount);
+        this.entityData.define(INFLATED, false);
     }
 
     @Override
@@ -155,4 +203,11 @@ public class BlazingMonsterEntity extends MonsterEntity {
         return success;
     }
 
+    @Override
+    public void travel(Vec3 travelVector) {
+        if (this.isEffectiveAi() || this.isControlledByLocalInstance() && spawnTicks) {
+            this.setDeltaMovement(Vec3.ZERO);
+        }
+        super.travel(Vec3.ZERO);
+    }
 }

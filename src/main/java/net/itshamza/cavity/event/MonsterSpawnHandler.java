@@ -115,10 +115,9 @@ public class MonsterSpawnHandler {
                 monster = new CyclopsMonsterEntity(ModEntityCreator.CYCLOPS_MONSTER.get(), world);
             } else if (blockUnder == (ModBlocks.BUNDLE_CHEST_CAVITY.get())) {
                 monster = new BundleMonsterEntity(ModEntityCreator.BUNDLE_MONSTER.get(), world);
+
             } else if (blockUnder == (ModBlocks.COPPER_CHEST_CAVITY.get())) {
                 monster = new ElectricMonsterEntity(ModEntityCreator.ELECTRIC_MONSTER.get(), world);
-            } else if (blockUnder == (ModBlocks.ICE_CHEST_CAVITY.get())) {
-                monster = new IceMonsterEntity(ModEntityCreator.ICE_MONSTER.get(), world);
             } else if (blockUnder == (ModBlocks.ROTTEN_FLESH_CHEST_CAVITY.get())) {
                 monster = new RottenMonsterEntity(ModEntityCreator.ROTTEN_MONSTER.get(), world);
             } else if (blockUnder == (ModBlocks.RIDABLE_CHEST_CAVITY.get())) {
@@ -135,7 +134,10 @@ public class MonsterSpawnHandler {
                 world.addFreshEntity(monster);
                 System.out.println("[DEBUG] " + monster.getClass().getSimpleName() + " spawned at " + pos);
             }
-            for(ServerPlayer serverplayer : world.getEntitiesOfClass(ServerPlayer.class, monster.getBoundingBox().inflate(5.0D))) {
+            for(ServerPlayer serverplayer : world.getEntitiesOfClass(ServerPlayer.class, monster.getBoundingBox().inflate(10.0D))) {
+                if (monster instanceof BundleMonsterEntity bundleMonster) {
+                    bundleMonster.setOwner(serverplayer);
+                }
                 CriteriaTriggers.SUMMONED_ENTITY.trigger(serverplayer, monster);
             }
         }

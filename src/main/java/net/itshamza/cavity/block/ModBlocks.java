@@ -52,10 +52,6 @@ public class ModBlocks {
             () -> new CavityBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.ZOMBIE).mapColor(MapColor.COLOR_GREEN).strength(1F).sound(SoundType.MUD), Items.COPPER_INGOT.getDefaultInstance()));
     public static final RegistryObject<Block> COPPER_CHEST_CAVITY = registerBlock("copper_chest_cavity",
             () -> new RotatingBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.ZOMBIE).mapColor(MapColor.COLOR_GREEN).strength(1F).sound(SoundType.MUD)));
-    public static final RegistryObject<Block> UNSEWN_ICE_CAVITY = registerBlock("unsewn_ice_cavity",
-            () -> new CavityBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.ZOMBIE).mapColor(MapColor.COLOR_GREEN).strength(1F).sound(SoundType.MUD), Items.ICE.getDefaultInstance()));
-    public static final RegistryObject<Block> ICE_CHEST_CAVITY = registerBlock("ice_chest_cavity",
-            () -> new RotatingBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.ZOMBIE).mapColor(MapColor.COLOR_GREEN).strength(1F).sound(SoundType.MUD)));
     public static final RegistryObject<Block> UNSEWN_ROTTEN_FLESH_CAVITY = registerBlock("unsewn_rotten_flesh_cavity",
             () -> new CavityBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.ZOMBIE).mapColor(MapColor.COLOR_GREEN).strength(1F).sound(SoundType.MUD), Items.ROTTEN_FLESH.getDefaultInstance()));
     public static final RegistryObject<Block> ROTTEN_FLESH_CHEST_CAVITY = registerBlock("rotten_flesh_chest_cavity",
