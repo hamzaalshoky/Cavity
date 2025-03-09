@@ -1,9 +1,11 @@
 package net.itshamza.cavity.entity.custom.theoneandonly;
 
+import net.itshamza.cavity.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class ElectricMonsterEntity extends MonsterEntity {
     private static final EntityDataAccessor<Boolean> ATTACKING =
@@ -30,6 +33,8 @@ public class ElectricMonsterEntity extends MonsterEntity {
 
     public ElectricMonsterEntity(EntityType<? extends MonsterEntity> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
+        this.setSecondsOnFire(-1);
+        this.setRemainingFireTicks(0);
     }
 
     protected void registerGoals() {
@@ -65,7 +70,7 @@ public class ElectricMonsterEntity extends MonsterEntity {
     }
 
     protected float getSoundVolume() {
-        return 0.2F;
+        return 1F;
     }
 
     private void setupAnimationStates() {
@@ -106,6 +111,24 @@ public class ElectricMonsterEntity extends MonsterEntity {
         if (this.level().isClientSide()) {
             this.setupAnimationStates();
         }
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.MEDIUM_IDLE.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.MEDIUM_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.MEDIUM_DEATH.get();
     }
 
     @Override

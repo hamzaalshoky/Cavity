@@ -1,6 +1,7 @@
 package net.itshamza.cavity.entity.custom.theoneandonly;
 
 import net.itshamza.cavity.screen.BundleMonsterMenu;
+import net.itshamza.cavity.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -8,8 +9,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.*;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -48,6 +51,8 @@ public class BundleMonsterEntity extends MonsterEntity implements ContainerListe
 
     public BundleMonsterEntity(EntityType<? extends MonsterEntity> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
+        this.setSecondsOnFire(-1);
+        this.setRemainingFireTicks(0);
     }
 
     protected void registerGoals() {
@@ -83,8 +88,26 @@ public class BundleMonsterEntity extends MonsterEntity implements ContainerListe
         this.playSound(SoundEvents.ZOMBIE_STEP, 0.15F, 1.0F);
     }
 
+    @org.jetbrains.annotations.Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.SMALL_IDLE.get();
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.SMALL_HURT.get();
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.SMALL_DEATH.get();
+    }
+
     protected float getSoundVolume() {
-        return 0.2F;
+        return 1F;
     }
 
     private void setupAnimationStates() {

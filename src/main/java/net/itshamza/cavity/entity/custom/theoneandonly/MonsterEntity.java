@@ -1,9 +1,11 @@
 package net.itshamza.cavity.entity.custom.theoneandonly;
 
+import net.itshamza.cavity.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
@@ -21,6 +23,7 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 public class MonsterEntity extends Monster {
     private static final EntityDataAccessor<Boolean> ATTACKING =
@@ -37,6 +40,8 @@ public class MonsterEntity extends Monster {
 
     public MonsterEntity(EntityType<? extends Monster> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
+        this.setSecondsOnFire(-1);
+        this.setRemainingFireTicks(0);
     }
 
     protected void registerGoals() {
@@ -72,7 +77,7 @@ public class MonsterEntity extends Monster {
     }
 
     protected float getSoundVolume() {
-        return 0.2F;
+        return 1F;
     }
 
     private void setupAnimationStates() {
@@ -127,6 +132,24 @@ public class MonsterEntity extends Monster {
         if (spawnTicks > 0) {
             spawnTicks--;
         }
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.MEDIUM_IDLE.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.MEDIUM_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.MEDIUM_DEATH.get();
     }
 
     public void setAttacking(boolean attacking) {

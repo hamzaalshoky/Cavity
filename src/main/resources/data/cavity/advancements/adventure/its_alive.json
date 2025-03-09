@@ -24,7 +24,6 @@
             { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:electric_monster" } },
             { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:cyclops_monster" } },
             { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:exploding_monster" } },
-            { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:ice_monster" } },
             { "condition": "minecraft:entity_properties", "entity": "this", "predicate": { "type": "cavity:ridable_monster" } }
           ]
         }

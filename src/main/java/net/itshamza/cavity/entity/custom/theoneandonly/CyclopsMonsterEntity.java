@@ -1,5 +1,6 @@
 package net.itshamza.cavity.entity.custom.theoneandonly;
 
+import net.itshamza.cavity.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -14,6 +15,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -43,7 +45,7 @@ public class CyclopsMonsterEntity extends MonsterEntity implements NeutralMob{
     public int idleAnimationTimeout = 0;
     public final AnimationState attackAnimationState = new AnimationState();
     public int attackAnimationTimeout = 0;
-    private static final EntityDataAccessor<Boolean> DATA_STARED_AT = SynchedEntityData.defineId(EnderMan.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_STARED_AT = SynchedEntityData.defineId(CyclopsMonsterEntity.class, EntityDataSerializers.BOOLEAN);
 
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     private int remainingPersistentAngerTime;
@@ -53,6 +55,8 @@ public class CyclopsMonsterEntity extends MonsterEntity implements NeutralMob{
 
     public CyclopsMonsterEntity(EntityType<? extends MonsterEntity> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
+        this.setSecondsOnFire(-1);
+        this.setRemainingFireTicks(0);
     }
 
     protected void registerGoals() {
@@ -88,8 +92,26 @@ public class CyclopsMonsterEntity extends MonsterEntity implements NeutralMob{
         this.playSound(SoundEvents.ZOMBIE_STEP, 0.15F, 1.0F);
     }
 
+    @org.jetbrains.annotations.Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.LARGE_IDLE.get();
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.LARGE_HURT.get();
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.LARGE_DEATH.get();
+    }
+
     protected float getSoundVolume() {
-        return 0.2F;
+        return 1F;
     }
 
     private void setupAnimationStates() {
@@ -234,7 +256,18 @@ public class CyclopsMonsterEntity extends MonsterEntity implements NeutralMob{
     }
 
     protected float getStandingEyeHeight(Pose p_32517_, EntityDimensions p_32518_) {
-        return 2.8F;
+        return 1.9F;
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        boolean wasHurt = super.hurt(source, amount);
+
+        if (wasHurt && random.nextFloat() < 0.3f) {
+            teleportTarget(level(), this, 24);
+        }
+
+        return wasHurt;
     }
 
     static class EndermanLookForPlayerGoal extends NearestAttackableTargetGoal<Player> {

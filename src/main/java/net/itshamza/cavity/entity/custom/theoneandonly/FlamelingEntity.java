@@ -20,6 +20,8 @@ public class FlamelingEntity extends Monster {
     public int idleAnimationTimeout = 0;
     public FlamelingEntity(EntityType<? extends Monster> type, Level world) {
         super(type, world);
+        this.setSecondsOnFire(10000);
+        this.setRemainingFireTicks(200000);
     }
 
     @Override
@@ -47,6 +49,8 @@ public class FlamelingEntity extends Monster {
         if(this.isInWaterRainOrBubble()){
             hurt(this.damageSources().dryOut(), 2f);
         }
+        this.setSecondsOnFire(10000);
+        this.setRemainingFireTicks(200000);
     }
 
     private void setupAnimationStates() {

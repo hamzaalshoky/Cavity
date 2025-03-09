@@ -7,7 +7,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.itshamza.cavity.entity.animations.ModAnimationDefinitions;
 import net.itshamza.cavity.entity.custom.theoneandonly.FlamelingEntity;
-import net.itshamza.cavity.entity.custom.theoneandonly.IceMonsterEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -25,7 +24,14 @@ public class FlamelingModel<T extends FlamelingEntity> extends HierarchicalModel
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -8.0F, -3.0F, 6.0F, 8.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create(), PartPose.offset(-3.0F, 23.0F, -3.0F));
+
+		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-3.0F, -6.0F, -3.0F, 6.0F, 6.0F, 6.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 12).addBox(-1.0F, -4.0F, -5.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, -2.0F, 3.0F));
+
+		PartDefinition leg = all.addOrReplaceChild("leg", CubeListBuilder.create().texOffs(8, 12).mirror().addBox(-0.5F, 0.0F, -0.5F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(1.5F, -2.0F, 3.5F));
+
+		PartDefinition leg2 = all.addOrReplaceChild("leg2", CubeListBuilder.create().texOffs(8, 12).addBox(-0.5F, -0.0872F, -0.4962F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(4.5F, -2.0F, 3.5F));
 
 		return LayerDefinition.create(meshdefinition, 32, 32);
 	}
@@ -34,7 +40,7 @@ public class FlamelingModel<T extends FlamelingEntity> extends HierarchicalModel
 	public void setupAnim(FlamelingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 
-		//this.animateWalk(ModAnimationDefinitions.BEAVER_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.animateWalk(ModAnimationDefinitions.FLAMELING_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(entity.idleAnimationState, ModAnimationDefinitions.FLAMELING_IDLE, ageInTicks, 1f);
 		//this.animate(entity.swimmingAnimationState, ModAnimationDefinitions.BEAVER_SWIM, ageInTicks, 1f);
 	}

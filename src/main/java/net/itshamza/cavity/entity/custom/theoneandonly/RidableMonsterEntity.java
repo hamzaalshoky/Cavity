@@ -1,10 +1,12 @@
 package net.itshamza.cavity.entity.custom.theoneandonly;
 
+import net.itshamza.cavity.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -46,6 +48,26 @@ public class RidableMonsterEntity extends MonsterEntity implements PlayerRideabl
 
     public RidableMonsterEntity(EntityType<? extends MonsterEntity> p_27557_, Level p_27558_) {
         super(p_27557_, p_27558_);
+        this.setSecondsOnFire(-1);
+        this.setRemainingFireTicks(0);
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.MEDIUM_IDLE.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.MEDIUM_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.MEDIUM_DEATH.get();
     }
 
     protected void registerGoals() {
@@ -81,7 +103,7 @@ public class RidableMonsterEntity extends MonsterEntity implements PlayerRideabl
     }
 
     protected float getSoundVolume() {
-        return 0.2F;
+        return 1F;
     }
 
     private void setupAnimationStates() {
@@ -129,9 +151,6 @@ public class RidableMonsterEntity extends MonsterEntity implements PlayerRideabl
     public void tick() {
         super.tick();
 
-        if (this.level().isClientSide()) {
-            this.setupAnimationStates();
-        }
         if (this.level().isClientSide()) {
             this.setupAnimationStates();
         }

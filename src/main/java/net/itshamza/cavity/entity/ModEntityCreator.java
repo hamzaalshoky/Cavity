@@ -34,7 +34,7 @@ public class ModEntityCreator {
                     .sized(0.8f, 1.2f).build("bundle_monster"));
     public static final RegistryObject<EntityType<CyclopsMonsterEntity>> CYCLOPS_MONSTER =
             ENTITY_TYPES.register("cyclops_monster", () -> EntityType.Builder.of(CyclopsMonsterEntity::new, MobCategory.MONSTER)
-                    .sized(1f, 3f).build("cyclops_monster"));
+                    .sized(1f, 2.5f).build("cyclops_monster"));
     public static final RegistryObject<EntityType<ElectricMonsterEntity>> ELECTRIC_MONSTER =
             ENTITY_TYPES.register("electric_monster", () -> EntityType.Builder.of(ElectricMonsterEntity::new, MobCategory.MONSTER)
                     .sized(1.3f, 2f).build("electric_monster"));
@@ -49,7 +49,7 @@ public class ModEntityCreator {
                     .sized(0.9f, 3.2f).build("rotten_monster"));
     public static final RegistryObject<EntityType<FlamelingEntity>> FLAMELING =
             ENTITY_TYPES.register("flameling", () -> EntityType.Builder.of(FlamelingEntity::new, MobCategory.MONSTER)
-                    .sized(0.4f, 0.5f).build("flameling"));
+                    .sized(0.4f, 0.6f).build("flameling"));
 
 
     //RENDERERS

@@ -1,0 +1,68 @@
+{
+  "flesh_block_break": {
+    "subtitle": "sounds.cavity.flesh_block_break",
+    "sounds": [
+      "cavity:block_break"
+    ]
+  },
+  "flesh_block_step": {
+    "subtitle": "sounds.cavity.flesh_block_step",
+    "sounds": [
+      "cavity:block_walk"
+    ]
+  },
+  "small_idle": {
+    "subtitle": "sounds.cavity.small_idle",
+    "sounds": [
+      "cavity:small_idle"
+    ]
+  },
+  "small_hurt": {
+    "subtitle": "sounds.cavity.small_hurt",
+    "sounds": [
+      "cavity:small_hurt"
+    ]
+  },
+  "small_death": {
+    "subtitle": "sounds.cavity.small_death",
+    "sounds": [
+      "cavity:small_death"
+    ]
+  },
+  "medium_idle": {
+    "subtitle": "sounds.cavity.medium_idle",
+    "sounds": [
+      "cavity:medium_idle"
+    ]
+  },
+  "medium_hurt": {
+    "subtitle": "sounds.cavity.medium_hurt",
+    "sounds": [
+      "cavity:medium_hurt"
+    ]
+  },
+  "medium_death": {
+    "subtitle": "sounds.cavity.medium_death",
+    "sounds": [
+      "cavity:medium_death"
+    ]
+  },
+  "large_idle": {
+    "subtitle": "sounds.cavity.large_idle",
+    "sounds": [
+      "cavity:large_idle"
+    ]
+  },
+  "large_hurt": {
+    "subtitle": "sounds.cavity.large_hurt",
+    "sounds": [
+      "cavity:large_hurt"
+    ]
+  },
+  "large_death": {
+    "subtitle": "sounds.cavity.large_death",
+    "sounds": [
+      "cavity:large_death"
+    ]
+  }
+}

@@ -3,7 +3,6 @@ package net.itshamza.cavity.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.itshamza.cavity.Cavity;
 import net.itshamza.cavity.entity.custom.theoneandonly.FlamelingEntity;
-import net.itshamza.cavity.entity.custom.theoneandonly.IceMonsterEntity;
 import net.itshamza.cavity.entity.layer.ModModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Specification-Title: cavity
+Specification-Vendor: ItsHamza, DanielStairman, YaBoiBruno
+Specification-Version: 1
+Implementation-Title: Cavity
+Implementation-Version: 1.0.0
+Implementation-Vendor: ItsHamza, DanielStairman, YaBoiBruno
+Implementation-Timestamp: 2025-03-09T23:32:13+0300
+

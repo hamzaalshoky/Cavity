@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-06T17:39:59.5820818	Loot Tables
+// 1.20.1	2025-03-09T11:32:19.2582873	Loot Tables
 f0ad278a149b48025c65c7e966cff1ebe08b1632 data/cavity/loot_tables/blocks/blaze_chest_cavity.json
 0002d2ea6f118a77ba03652cc4a05caa9957a2e9 data/cavity/loot_tables/blocks/bundle_chest_cavity.json
 db4fba8c2aec8265aa478e8c0b8eacdd3371ac59 data/cavity/loot_tables/blocks/chest_cavity.json
@@ -7,17 +7,13 @@ ffc89f345ea070a93e60db83525aba9aac52abd1 data/cavity/loot_tables/blocks/corpse_h
 37968779aaea682c6ab49c68f20fb71f4deb6aae data/cavity/loot_tables/blocks/ender_eye_chest_cavity.json
 a247c399dc1149f4fccca1e0c578b2041957aab9 data/cavity/loot_tables/blocks/flesh_block.json
 2d8d5a4798c095d3ebb562e9144c624d5d863225 data/cavity/loot_tables/blocks/gunpowder_chest_cavity.json
-48591ff43bd2be760ae3ca05bba6ccd9cec053c2 data/cavity/loot_tables/blocks/ice_chest_cavity.json
 c458f26353bd114ac19766e526f0c05fb7fe0d06 data/cavity/loot_tables/blocks/ridable_chest_cavity.json
 dc1de320c4735ecced2a7b5dbbffe06983501b04 data/cavity/loot_tables/blocks/rotten_flesh_chest_cavity.json
 95a7b2a4551219af99282ab5625d059b584277f8 data/cavity/loot_tables/blocks/sewn_chest_cavity.json
-ae26af2cd96ddecf64c247c2dfaefd45ecd21fdb data/cavity/loot_tables/blocks/spider_eye_chest_cavity.json
 c0e6234c80ecea0afd19327aeba8d084d40a0d4d data/cavity/loot_tables/blocks/unsewn_blaze_cavity.json
 430e71850f50fa1a2d1202178d77f32deb80895f data/cavity/loot_tables/blocks/unsewn_bundle_cavity.json
 8673296344832ddb40ece20e8ba7dc3c31492380 data/cavity/loot_tables/blocks/unsewn_copper_cavity.json
 b48bf5fb489c3bea535e64d12d078faba28d1e13 data/cavity/loot_tables/blocks/unsewn_ender_eye_cavity.json
 4d3d58b23f3aa06e534a8ecf8e2cd60573ac36f1 data/cavity/loot_tables/blocks/unsewn_gunpowder_cavity.json
-7d51048c89c38f02a0fdfc283ef2d11b4cfb5506 data/cavity/loot_tables/blocks/unsewn_ice_cavity.json
 b5316721bab6a1b2a9ae3a7a95e73f17a90a760b data/cavity/loot_tables/blocks/unsewn_ridable_cavity.json
 b1c310e314f06a64bbfab4ac9a56623f341417eb data/cavity/loot_tables/blocks/unsewn_rotten_flesh_cavity.json
-1f07e2c15e84cf65836f11b232c6d84532d55ac9 data/cavity/loot_tables/blocks/unsewn_spider_eye_cavity.json

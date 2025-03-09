@@ -928,5 +928,17 @@
     },
     "done": true
   },
+  "cavity:adventure/nobody": {
+    "criteria": {
+      "attack_cyclops": "2025-03-09 10:39:28 +0300"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/blue_dye_from_cornflower": {
+    "criteria": {
+      "has_cornflower": "2025-03-09 10:42:49 +0300"
+    },
+    "done": true
+  },
   "DataVersion": 3465
 }

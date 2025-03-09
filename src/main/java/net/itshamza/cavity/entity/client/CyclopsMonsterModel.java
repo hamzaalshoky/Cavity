@@ -28,13 +28,25 @@ public class CyclopsMonsterModel<T extends CyclopsMonsterEntity> extends Hierarc
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+		PartDefinition all = partdefinition.addOrReplaceChild("all", CubeListBuilder.create(), PartPose.offset(0.5F, 24.0F, 0.0F));
 
-		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-8.0F, -37.0F, -8.0F, 16.0F, 37.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition body = all.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 20).addBox(-5.0F, -1.0F, -3.5F, 10.0F, 14.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, -25.0F, 0.5F));
 
-		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(0, 53).addBox(-8.0F, -48.0F, -8.0F, 16.0F, 11.0F, 16.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create().texOffs(28, 44).addBox(5.0F, -15.0F, -3.0F, 4.0F, 10.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(28, 44).addBox(-9.0F, -15.0F, -3.0F, 4.0F, 10.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 0).addBox(-5.0F, -10.0F, -5.0F, 10.0F, 10.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -1.0F, -0.5F));
 
-		return LayerDefinition.create(meshdefinition, 128, 128);
+		PartDefinition leg_l = body.addOrReplaceChild("leg_l", CubeListBuilder.create().texOffs(40, 0).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(3.0F, 13.0F, -1.5F));
+
+		PartDefinition leg_r = body.addOrReplaceChild("leg_r", CubeListBuilder.create().texOffs(40, 0).mirror().addBox(-2.0F, 0.0F, -2.0F, 4.0F, 10.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(-3.0F, 13.0F, -1.5F));
+
+		PartDefinition hand_r = all.addOrReplaceChild("hand_r", CubeListBuilder.create().texOffs(48, 20).mirror().addBox(-4.0F, -2.0F, -2.0F, 4.0F, 20.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false)
+				.texOffs(0, 52).addBox(-6.0F, 18.0F, -2.0F, 8.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.5F, -24.0F, 0.0F));
+
+		PartDefinition hand_l = all.addOrReplaceChild("hand_l", CubeListBuilder.create().texOffs(32, 20).addBox(0.0F, -2.0F, -2.0F, 4.0F, 20.0F, 4.0F, new CubeDeformation(0.0F))
+				.texOffs(0, 40).addBox(-2.0F, 18.0F, -2.0F, 8.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(4.5F, -24.0F, 0.0F));
+
+		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
 
 	@Override
@@ -42,8 +54,8 @@ public class CyclopsMonsterModel<T extends CyclopsMonsterEntity> extends Hierarc
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(entity, netHeadYaw, headPitch, ageInTicks);
 
-		//this.animateWalk(ModAnimationDefinitions.BEAVER_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
-		this.animate(entity.idleAnimationState, ModAnimationDefinitions.IDLE, ageInTicks, 1f);
+		this.animateWalk(ModAnimationDefinitions.CYCLOPS_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.animate(entity.idleAnimationState, ModAnimationDefinitions.CYCLOPS_IDLE, ageInTicks, 1f);
 		//this.animate(entity.swimmingAnimationState, ModAnimationDefinitions.BEAVER_SWIM, ageInTicks, 1f);
 	}
 	private void applyHeadRotation(CyclopsMonsterEntity pEntity, float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
